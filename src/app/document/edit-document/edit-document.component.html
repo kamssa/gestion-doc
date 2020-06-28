@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-header>
+  <mat-card-title>Enregistrer un document</mat-card-title>
+  </mat-card-header>
+</mat-card>
+<br>
+<div>
+  <mat-card>
+  <form [formGroup]="docForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="Libelle" formControlName="libelle"/>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <input matInput placeholder="document" formControlName="document"/>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="submit" matTooltip="sauver le doc">Enregistrer</button>
+  </form>
+</mat-card>
+</div>

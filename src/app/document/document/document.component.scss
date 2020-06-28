@@ -1,0 +1,19 @@
+.flexbox-container{
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+.flexbox-container > div{
+  width: 50%;
+  padding: 10px ;
+}
+.flexbox-container > div:first-child {
+margin-right: 20px;
+}
+hr{
+  width:2px;
+  background-color: #0C3;
+  height: 500px;
+}
+
+
