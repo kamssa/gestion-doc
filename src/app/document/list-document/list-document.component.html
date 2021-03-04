@@ -1,12 +1,48 @@
-<mat-card>
-  <mat-card-header>
-  <mat-card-title>La liste des documents</mat-card-title>
-  </mat-card-header>
-</mat-card>
-<br>
-<div>
-  <!--<mat-form-field>
-  <input #searchBox id="serch-box" placeholder="Recherche" (keyup)="search(searchBox.value)"/>
-  </mat-form-field>-->
-</div>
+<div class="container">
+          <div class="">
+            <h4 class="card-title">Recherche de documents </h4>
+          </div>
+          <div class="">
+            <div>
+              <div>
+                <div class="listes">
+                  <div class="item">
+                      <div>
+                        <div class="">
+                          <div class="recherche_p rounded-pill">
+                            <form class="form-inline my-2 my-lg-0">
+                              <div class="recherche-barr ">
+                                <input class="recherche-input " type="search" placeholder="Recherche" aria-label="Search" #searchbox (keyup)="search(searchbox.value)">
+                              </div>
+                            </form>
+                          </div>
+                         <!-- <div class="">
+                              <button mat-raised-button type="submit"  class="valid">Rechercher</button>
+                            </div>-->
+                          <div>
+                              <div *ngFor="let doc of oInfoDoc | async" class="list-group">
+                                <a class="list-group-item  clearfix">
+                                  <div class="pull-left">
+                                    <h5 style="color: #191919">{{doc.nomDoc}}</h5>
+                                    <h5 style="color: #191919">{{doc.pathImage}}</h5>
+                                  </div>
+                                </a>
+                                <!--<div fxLayout="row" fxLayoutAlign="space-around center">
+                                  <button  mat-button color="primary" (click)="onImages(doc.id)">Voir le Detail</button>
+                                </div>-->
+                                <mat-divider></mat-divider>
+                                <br>
+                              </div>
+                            </div>
+
+                        </div>
+                      </div>
+                      <div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 

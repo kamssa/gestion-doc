@@ -1,0 +1,43 @@
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import "src/assets/core/variables";
+@import "src/assets/core/mixins";
+@import "~bootstrap/scss/bootstrap";
+
+
+// Core Components
+@import "src/assets/core/buttons";
+@import "src/assets/core/checkboxes";
+@import "src/assets/core/radios";
+@import "src/assets/core/forms";
+@import "src/assets/core/input-group";
+@import "src/assets/core/images";
+@import "src/assets/core/navbar";
+@import "src/assets/core/alerts";
+@import "src/assets/core/type";
+@import "src/assets/core/tabs";
+@import "src/assets/core/tooltip";
+@import "src/assets/core/popover";
+@import "src/assets/core/dropdown";
+@import "src/assets/core/togglebutton";
+@import "src/assets/core/ripples";
+@import "src/assets/core/footers";
+@import "src/assets/core/sidebar-and-main-panel";
+@import "src/assets/core/fixed-plugin";
+@import "src/assets/core/tables";
+@import "src/assets/core/misc";
+
+@import "src/assets/core/cards";
+@import "src/assets/core/cards/card-stats";
+@import "src/assets/core/cards/card-profile";
+@import "src/assets/core/cards/card-plain";
+
+//plugin scss
+@import "src/assets/core/plugins/animate";
+@import "src/assets/core/plugins/chartist";
+@import "src/assets/core/plugins/perfect-scrollbar";
+
+@import "src/assets/core/responsive";
+
+@import "src/assets/core/angular-modal.scss";

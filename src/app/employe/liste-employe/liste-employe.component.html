@@ -1,0 +1,75 @@
+  <div class="container-fluid">
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">La liste des employés</h4>
+          </div>
+          <div class="row" fxLayout="row" fxLayoutAlign="end center">
+            <div class="col-md-8" hidden>
+              <mat-form-field>
+                <input matInput (keyup)="applyFilter($event)"  placeholder="Recherche..." #input>
+              </mat-form-field>
+            </div>
+           <!-- <div class="col-md-4" >
+              <button mat-button (click)="openDialog()" class="float-right btn btn-danger"> Créer un employé  </button>
+            </div>-->
+          </div>
+          <table mat-table [dataSource]="dataSource" style="position: relative; top: 20px;">
+            <ng-container matColumnDef="nomComplet">
+              <th style="width:300px;" mat-header-cell *matHeaderCellDef> Nom et Prénoms </th>
+              <td mat-cell *matCellDef="let employe"> {{employe.nomComplet}} </td>
+            </ng-container>
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="service">
+              <th style="width:300px;" mat-header-cell *matHeaderCellDef> Service </th>
+              <td mat-cell *matCellDef="let employe">{{employe.departement.libelle}}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="update">
+              <th mat-header-cell *matHeaderCellDef> Modifier </th>
+              <td mat-cell *matCellDef="let employe">
+                <button mat-icon-button color="accent" (click)="redirectToUpdate(employe.id)">
+                  <mat-icon class="mat-18">system_update</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell *matHeaderCellDef> Supprimer </th>
+              <td mat-cell *matCellDef="let employe">
+                <button mat-icon-button color="warn" (click)="redirectToDelete(employe.id)">
+                  <mat-icon class="mat-18">delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="employe">
+              <th mat-header-cell *matHeaderCellDef>
+                <button mat-button (click)="openDialog()" style="position: relative; top: -10px;" class="float-right btn btn-danger"> Créer un employé  </button>
+              </th>
+              <td mat-cell *matCellDef="let departement">
+                <!-- <button mat-icon-button color="warn" (click)="redirectToDelete(departement.id)">
+                   <mat-icon class="mat-18">delete</mat-icon>
+                 </button>-->
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">Pas de données "</td>
+            </tr>
+          </table>
+          <div class="pagination" style="text-align: right; position: relative; top:30px;">
+            <mat-paginator  [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
+          </div>
+          <p>
+            &copy; Copyright 2020 - {{test | date: 'yyyy'}} <span> ParKerBase. </span>Tous droits reservés. <a>Powered by Infinity Media Technology.</a>
+          </p>
+        </div>
+      </div>
+
+
+  </div>
+
+
