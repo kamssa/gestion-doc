@@ -38,7 +38,14 @@ export class DepartementService {
   getDepByIdEntreprise(id: number): Observable<Resultat<Departement[]>> {
     return this.http.get<Resultat<Departement[]>>(`${environment.apiUrl}/api/getDepartementByidEntreprise/${id}`);
   }
+  modifdepartement(departement: Departement): Observable<Resultat<Departement>> {
+    console.log('methode du service qui modifier departement', departement);
+    return this.http.put<Resultat<Departement>>(`${environment.apiUrl}/api/departement`, departement);
+  }
+  supprimerDepartement(id: number): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/api/departement/${id}`);
 
+  }
   departermentCreer(res: Resultat<Departement>) {
     console.log('depatement a ete  creer correctement essaie source');
     this.departementCreerSource.next(res);

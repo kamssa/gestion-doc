@@ -20,6 +20,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { StatistiqueComponent } from './statistique/statistique/statistique.component';
 import {ConnexionComponent} from "./connexion/connexion.component";
 import { UpdateDepartementComponent } from './departement/update-departement/update-departement.component';
+import {MatConfirmDialogComponent} from "./service/shared/dialogs/mat-confirm-dialog/mat-confirm-dialog.component";
+import { UpdateEmployeComponent } from './employe/update-employe/update-employe.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { UpdateDepartementComponent } from './departement/update-departement/upd
     ListeEmployeComponent,
     StatistiqueComponent,
     ConnexionComponent,
-    UpdateDepartementComponent
+    UpdateDepartementComponent,
+    MatConfirmDialogComponent,
+    UpdateEmployeComponent
   ],
     imports: [
         CommonModule,

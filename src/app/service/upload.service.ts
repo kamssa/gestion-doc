@@ -6,6 +6,7 @@ import {InfoDoc} from '../model/InfoDoc';
 import {MessageService} from './message.service';
 import {environment} from '../../environments/environment';
 import {catchError, map, tap} from "rxjs/operators";
+import {Departement} from "../model/Departement";
 
 
 @Injectable({
@@ -35,6 +36,9 @@ export class UploadService {
     console.log('methode du service qui ajoute une information sur le document', infoDoc);
     return this.httpClient.post<Resultat<InfoDoc>>(`${environment.apiUrl}/api/infoDoc`, infoDoc);
   }
+  getDocById(id: number): Observable<Resultat<InfoDoc>> {
+    return this.httpClient.get<Resultat<InfoDoc>>(`${environment.apiUrl}/api/infoDoc/${id}`);
+  }
   rechercheInfoParMc(mc: string): Observable<Array<InfoDoc>> {
     return this.httpClient.get<Resultat<Array<InfoDoc>>>(`${environment.apiUrl}/api/rechemc/?mc=${mc}`)
       .pipe(map(res => res.body,
@@ -44,15 +48,22 @@ export class UploadService {
       );
 
   }
-  upload(formData): Observable<HttpEvent<any>> {
-    const req = new HttpRequest('POST', `${environment.apiUrl}/api/file/upload`, formData, {
+  upload(id: number, formData): Observable<HttpEvent<any>> {
+    const req = new HttpRequest('POST', `${environment.apiUrl}/api/file/upload/?id=${id}`, formData, {
       reportProgress: true,
       responseType: 'json'
     });
 
     return this.httpClient.request(req);
   }
+  download(depName: string, keyname: string): Observable<any> {
+     // this.httpClient.get<Observable<any>>(`${environment.apiUrl}/api/file/download/?depName=${depName}&keyname=${keyname}`);
+      const req = new HttpRequest('GET', `${environment.apiUrl}/api/file/download/?depName=${depName}&keyname=${keyname}`, {
+        responseType: 'application/octet-stream'
+    });
 
+      return this.httpClient.request(req);
+  }
  /* getFiles(): Observable<any> {
     return this.httpClient.get(`${environment}/files`);
   }*/

@@ -44,8 +44,8 @@ export class EditDocumentComponent implements OnInit {
 
     this.managerService.getPersonneById(decoded.sub).subscribe(result => {
       this.personne = result.body;
-      this.idDep = result.body.departement.id;
-       console.log('edit document', this.personne);
+      this.idDep = result.body?.departement?.id;
+      console.log('edit document', this.personne);
     });
 
     this.initForm();
@@ -87,7 +87,7 @@ export class EditDocumentComponent implements OnInit {
          const formData = new FormData();
          formData.append('file', this.currentFile);
          console.log('formdata', formData);
-         this.uploadService.upload(formData).subscribe(
+         this.uploadService.upload(this.idDep, formData).subscribe(
            event => {
              if (event.type === HttpEventType.UploadProgress) {
                this.progress = Math.round(100 * event.loaded / event.total);

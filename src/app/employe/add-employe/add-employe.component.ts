@@ -91,7 +91,7 @@ export class AddEmployeComponent implements OnInit {
        let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
             dialogRef.afterClosed()
          .subscribe(result => {
-           this.router.navigate(['finance']);
+           this.router.navigate(['employe']);
          });
    });
 

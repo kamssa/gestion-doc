@@ -53,6 +53,7 @@
               <td class="mat-cell" colspan="4">Pas de données "{{input.value}}"</td>
             </tr>
           </table>
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
           <div class="pagination" style="text-align: right; position: relative; top:30px;">
           <mat-paginator  [pageSizeOptions]="[10]" showFirstLastButtons></mat-paginator>
           </div>

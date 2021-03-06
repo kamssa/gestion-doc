@@ -12,6 +12,7 @@ export class Personne {
               public nomComplet?: string,
               public departement?: Departement,
               public adresse?: Adresse,
-              public type?: string) {
+              public type?: string,
+              public roles?: []) {
   }
 }

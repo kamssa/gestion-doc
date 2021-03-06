@@ -4,13 +4,13 @@ import {Departement} from "../../model/Departement";
 import {StorageMap} from "@ngx-pwa/local-storage";
 import {Manager} from "../../model/Manager";
 import {DepartementService} from "../../service/departement.service";
-import {SuccessDialogComponent} from "../../service/shared/dialogs/success-dialog/success-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {ManagerService} from "../../service/manager.service";
 import {AuthService} from "../../service/auth.service";
-import {Employe} from "../../model/Employe";
+import {MatSnackBar} from "@angular/material/snack-bar";
+
 
 @Component({
   selector: 'app-add-departement',
@@ -23,12 +23,13 @@ export class AddDepartementComponent implements OnInit {
   manager: Manager;
   private dialogConfig;
   personne: any;
-  idEntreprise: number;
-
+  error = '';
+  departement: Departement;
   constructor(private fb: FormBuilder, private storage: StorageMap, private router: Router,
               private departementService: DepartementService,
               private dialog: MatDialog, private authService: AuthService,
-              private managerService: ManagerService) { }
+              private managerService: ManagerService, private _snackBar: MatSnackBar,
+              public dialogRef: MatDialogRef<AddDepartementComponent>) { }
 
   ngOnInit(): void {
     const currentUser = this.authService.currentUserValue;
@@ -60,12 +61,26 @@ export class AddDepartementComponent implements OnInit {
     console.log('Voir departement', departement);
     this.departementService.ajoutDepartement(departement).subscribe(data => {
       console.log('retour departement', data);
-      let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
-      dialogRef.afterClosed()
-        .subscribe(result => {
-          this.router.navigate(['departement']);
+      this.departement = data.body;
+      if (data.status === 0){
+        this.dialogRef.close(this.departement);
+        this._snackBar.open('Succès de l\'opération!', '', {
+          duration: 3000,
+          verticalPosition: 'top',
         });
-    });
+        this.router.navigate(['service']);
+      }else {
+        this.error = data.messages[0];
+        console.log( data.messages);
+      }
+
+    }, error => {
+      this.error = error;
+      console.log(this.error);
+
+    }
+    );
+
   }
 
 }

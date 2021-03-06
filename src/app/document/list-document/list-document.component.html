@@ -1,5 +1,6 @@
 <div class="container">
-          <div class="">
+  <a class="btn btn-large btn-success" href="{{url}}">{{url}}</a>
+  <div class="">
             <h4 class="card-title">Recherche de documents </h4>
           </div>
           <div class="">
@@ -21,15 +22,24 @@
                             </div>-->
                           <div>
                               <div *ngFor="let doc of oInfoDoc | async" class="list-group">
+
                                 <a class="list-group-item  clearfix">
                                   <div class="pull-left">
                                     <h5 style="color: #191919">{{doc.nomDoc}}</h5>
                                     <h5 style="color: #191919">{{doc.pathImage}}</h5>
                                   </div>
                                 </a>
-                                <!--<div fxLayout="row" fxLayoutAlign="space-around center">
-                                  <button  mat-button color="primary" (click)="onImages(doc.id)">Voir le Detail</button>
-                                </div>-->
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    <button  mat-button  (click)="onImages(doc.nomDoc)">Télécharger</button>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <button  mat-button (click)="modifier(doc.nomDoc)">Modiier</button>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <button  mat-button  (click)="supprimer(doc.nomDoc)">Supprimer</button>
+                                  </div>
+                                </div>
                                 <mat-divider></mat-divider>
                                 <br>
                               </div>

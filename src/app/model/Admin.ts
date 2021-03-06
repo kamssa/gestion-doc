@@ -13,7 +13,8 @@ export class Admin extends Personne{
               public nomComplet ?: string,
               public departement?: Departement,
               public adresse ?: Adresse,
-              public  type?: string) {
-              super(id, version, nom, prenom, email, password, fonction, nomComplet, departement, adresse, type);
+              public  type?: string,
+              public roles?: []) {
+              super(id, version, nom, prenom, email, password, fonction, nomComplet, departement, adresse, type, roles);
   }
 }
