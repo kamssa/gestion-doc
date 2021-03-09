@@ -1,13 +1,14 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UploadService} from '../../service/upload.service';
-import {HttpErrorResponse, HttpEventType, HttpResponse} from '@angular/common/http';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {InfoDoc} from '../../model/InfoDoc';
 import {Departement} from "../../model/Departement";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {ManagerService} from "../../service/manager.service";
 import {AuthService} from "../../service/auth.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-edit-document',
@@ -27,6 +28,7 @@ export class EditDocumentComponent implements OnInit {
   personne: any;
   departement: Departement;
   idDep: number;
+  messages: any;
 
   fileInfos: Observable<any>;
 
@@ -34,7 +36,9 @@ export class EditDocumentComponent implements OnInit {
 //   file : any;
 
   constructor(private  fb: FormBuilder, private uploadService: UploadService,
-              private managerService: ManagerService, private authService: AuthService) {
+              private managerService: ManagerService,
+              private authService: AuthService,
+              private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -91,9 +95,23 @@ export class EditDocumentComponent implements OnInit {
            event => {
              if (event.type === HttpEventType.UploadProgress) {
                this.progress = Math.round(100 * event.loaded / event.total);
+               console.log('Voir le message upload=', event.type);
+               if (event.type === 1){
+                 this._snackBar.open('Succès de l\'opération!', '', {
+                   duration: 3000,
+                   verticalPosition: 'top',
+                 });
+
+              }
+               this.fileUpload.nativeElement.value = null;
+               this.currentFile = null;
+               console.log(this.currentFile);
+               this.docForm.reset();
+
              } else if (event instanceof HttpResponse) {
                this.message = event.body.message;
                // this.fileInfos = this.uploadService.getFiles();
+               console.log('Voir le message upload', event.body.message);
              }
            },
            err => {

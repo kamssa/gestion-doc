@@ -34,15 +34,19 @@
                                     <button  mat-button  (click)="onImages(doc.nomDoc)">Télécharger</button>
                                   </div>
                                   <div class="col-md-4">
-                                    <button  mat-button (click)="modifier(doc.nomDoc)">Modiier</button>
+                                    <button  mat-button (click)="modifier(doc.id)">Modiier</button>
                                   </div>
                                   <div class="col-md-4">
-                                    <button  mat-button  (click)="supprimer(doc.nomDoc)">Supprimer</button>
+                                    <button  mat-button  (click)="supprimer(doc.id)">Supprimer</button>
                                   </div>
                                 </div>
                                 <mat-divider></mat-divider>
                                 <br>
                               </div>
+
+                              <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+
+
                             </div>
 
                         </div>

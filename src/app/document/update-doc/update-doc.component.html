@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">Modifier un service</h4>
+      </div>
+      <mat-card class="card-body">
+        <form class="example-form" [formGroup]="docForm" (ngSubmit)="onSubmit()" novalidate *ngIf="docForm">
+          <mat-form-field class="example-full-width" >
+            <input matInput placeholder="Libellé" value="" formControlName="libelle">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+
+            <input matInput placeholder="Description" value="" formControlName="description">
+          </mat-form-field>
+          <button type="submit" class="btn btn-danger pull-left">Valider</button>
+          <button mat-button mat-dialog-close  class="btn btn-danger pull-right">Fermer</button>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+

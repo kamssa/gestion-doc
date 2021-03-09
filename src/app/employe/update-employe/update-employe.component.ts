@@ -1,12 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Departement} from "../../model/Departement";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
-import {DepartementService} from "../../service/departement.service";
 import {Router} from "@angular/router";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {Employe} from "../../model/Employe";
 import {EmployeService} from "../../service/employe.service";
+import {Personne} from "../../model/Personne";
 
 @Component({
   selector: 'app-update-employe',
@@ -14,9 +13,8 @@ import {EmployeService} from "../../service/employe.service";
   styleUrls: ['./update-employe.component.scss']
 })
 export class UpdateEmployeComponent implements OnInit {
-  departement: Departement;
   employeForm: FormGroup;
-  employe: Employe;
+  employe: Personne;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   constructor( private employeService: EmployeService,
@@ -38,8 +36,11 @@ export class UpdateEmployeComponent implements OnInit {
           email: this.employe.email,
           password: this.employe.password,
           fonction: this.employe.fonction,
+          nomComplet: this.employe.nomComplet,
           departement: this.employe.departement,
-          type: this.employe.type
+          adresse: this.employe.adresse,
+          type: this.employe.type,
+          roles: this.employe.roles
         });
       });
   }
@@ -47,8 +48,9 @@ export class UpdateEmployeComponent implements OnInit {
   onSubmit() {
     let formValue = this.employeForm.value;
 
-    this.departement = this.employeForm.value;
-    this.employeService.modifEmploye(this.employe).subscribe(data => {
+    this.employe = this.employeForm.value;
+    console.log(this.employe);
+    this.employeService.modifEmploye(formValue).subscribe(data => {
       if (data){
         this.employe = data.body;
         this.dialogRef.close(this.employe);
@@ -60,6 +62,6 @@ export class UpdateEmployeComponent implements OnInit {
         });
       }
     });
-    this.employeForm.reset();
+   // this.employeForm.reset();
   }
 }

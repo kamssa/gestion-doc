@@ -24,7 +24,7 @@
     </div>
 
     <label class="btn btn-default label_file">
-      <input type="file" #fileUpload id="fileUpload" name="fileUpload" class="file" (change)="selectFile($event)"  />
+      <input type="file" #fileUpload id="fileUpload" name="fileUpload" class="file" (change)="selectFile($event)"/>
     </label><br>
     <input type="submit" value="Archiver" class="bouton rounded"  [disabled]="!selectedFiles">
     <div class="alert alert-light" role="alert">{{ message }}</div>

@@ -22,6 +22,7 @@ import {ConnexionComponent} from "./connexion/connexion.component";
 import { UpdateDepartementComponent } from './departement/update-departement/update-departement.component';
 import {MatConfirmDialogComponent} from "./service/shared/dialogs/mat-confirm-dialog/mat-confirm-dialog.component";
 import { UpdateEmployeComponent } from './employe/update-employe/update-employe.component';
+import { UpdateDocComponent } from './document/update-doc/update-doc.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UpdateEmployeComponent } from './employe/update-employe/update-employe.
     ConnexionComponent,
     UpdateDepartementComponent,
     MatConfirmDialogComponent,
-    UpdateEmployeComponent
+    UpdateEmployeComponent,
+    UpdateDocComponent
   ],
     imports: [
         CommonModule,

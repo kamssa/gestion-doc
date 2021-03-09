@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {AddDepartementComponent} from "../add-departement/add-departement.component";
 import {MatTableDataSource} from "@angular/material/table";
 import {Departement} from "../../model/Departement";
@@ -38,9 +38,11 @@ export class ListeDepartementComponent implements OnInit {
               public dialog: MatDialog, private authService: AuthService,
               private managerService: ManagerService,
               private  dialogService: DialogConfirmService,
-              private _snackBar: MatSnackBar, private router: Router) {
+              private _snackBar: MatSnackBar, private router: Router,
+              private changeDetectorRefs: ChangeDetectorRef) {
   }
   ngOnInit(): void {
+    this.changeDetectorRefs.detectChanges();
     const currentUser = this.authService.currentUserValue;
     console.log('localstorage dans la nav bar', currentUser.body.body.accessToken);
     const helper = new JwtHelperService();
@@ -84,39 +86,48 @@ export class ListeDepartementComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddDepartementComponent, {
-      width: '650px',
-      data: this.departement
-    });
+    if (this.ROLE_NAME === 'ROLE_MANAGER'){
+      const dialogRef = this.dialog.open(AddDepartementComponent, {
+        width: '650px',
+        data: this.departement
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.departement = result;
-      this.receptacle.unshift(this.departement);
-      this.dataSource = this.receptacle;
-      this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        this.departement = result;
+        this.receptacle.unshift(this.departement);
+        this.dataSource = this.receptacle;
+        this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+    }else{
+      this.error = 'Vous n\'êtes pas autorisé';
+    }
+
   }
   redirectToUpdate(id: any) {
     console.log(id);
-    const dialogRef = this.dialog.open(UpdateDepartementComponent,{
-      data: {
-        departement: id
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.departement = result;
-      // this.receptacle
-      this.dataSource = this.receptacle;
-      this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    if (this.ROLE_NAME === 'ROLE_MANAGER'){
+      const dialogRef = this.dialog.open(UpdateDepartementComponent,{
+        data: {
+          departement: id
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        /*this.departement = result;
+        this.receptacle.sort();
+        this.dataSource = this.receptacle;
+        this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;*/
+        this.changeDetectorRefs.detectChanges();
+      });
+    }else{
+      this.error = 'Vous n\'êtes pas autorisé';
+    }
 
-
-    });
   }
   redirectToDelete(id: any) {
     if (this.ROLE_NAME === 'ROLE_MANAGER'){

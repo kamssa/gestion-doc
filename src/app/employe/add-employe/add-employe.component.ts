@@ -51,13 +51,8 @@ export class AddEmployeComponent implements OnInit {
       prenom: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-      fonction: new FormControl('', [Validators.required]),
       adresse: this.fb.group({
         boitePostal: [''],
-        mail: ['', Validators.required],
-        pays: ['', Validators.required],
-        ville: ['', Validators.required],
-        siteWeb:  ['', Validators.required],
         telephone: ['', Validators.required]
       }),
       departement: this.fb.group({

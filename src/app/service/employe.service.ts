@@ -35,12 +35,12 @@ export class EmployeService {
     console.log('methode du service qui ajoute un employe', employe);
     return this.http.post<Resultat<Employe>>(`${environment.apiUrl}/api/auth/signupEmpl`, employe);
   }
-  getEmployeById(id: Employe): Observable<Resultat<Employe>> {
-    return this.http.get<Resultat<Employe>>(`${environment.apiUrl}/api/auth/employe/${id}`);
+  getEmployeById(id: number): Observable<Resultat<Personne>> {
+    return this.http.get<Resultat<Personne>>(`${environment.apiUrl}/api/auth/employe/${id}`);
   }
-  modifEmploye(employe: Employe): Observable<Resultat<Employe>> {
-    console.log('methode du service qui modifier Employe', employe);
-    return this.http.put<Resultat<Employe>>(`${environment.apiUrl}/api/auth/employe`, employe);
+  modifEmploye(employe: Personne): Observable<Resultat<Personne>> {
+    console.log('methode du service qui modifier employe', employe);
+    return this.http.put<Resultat<Personne>>(`${environment.apiUrl}/api/auth/employe`, employe);
   }
   supprimerEmploye(id: number): Observable<any> {
     return this.http.delete(`${environment.apiUrl}/api/auth/employe/${id}`);

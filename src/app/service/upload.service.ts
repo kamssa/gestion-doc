@@ -36,11 +36,18 @@ export class UploadService {
     console.log('methode du service qui ajoute une information sur le document', infoDoc);
     return this.httpClient.post<Resultat<InfoDoc>>(`${environment.apiUrl}/api/infoDoc`, infoDoc);
   }
+  modifInfoDoc(infoDoc: InfoDoc): Observable<Resultat<InfoDoc>> {
+    console.log('methode du service qui modifie une information sur le document', infoDoc);
+    return this.httpClient.put<Resultat<InfoDoc>>(`${environment.apiUrl}/api/infoDoc`, infoDoc);
+  }
   getDocById(id: number): Observable<Resultat<InfoDoc>> {
     return this.httpClient.get<Resultat<InfoDoc>>(`${environment.apiUrl}/api/infoDoc/${id}`);
   }
-  rechercheInfoParMc(mc: string): Observable<Array<InfoDoc>> {
-    return this.httpClient.get<Resultat<Array<InfoDoc>>>(`${environment.apiUrl}/api/rechemc/?mc=${mc}`)
+  supprimerDocById(id: number): Observable<Resultat<boolean>> {
+    return this.httpClient.delete<Resultat<boolean>>(`${environment.apiUrl}/api/infoDoc/${id}`);
+  }
+  rechercheInfoParMc(mc: string, id: number): Observable<Array<InfoDoc>> {
+    return this.httpClient.get<Resultat<Array<InfoDoc>>>(`${environment.apiUrl}/api/rechemc/?mc=${mc}&id=${id}`)
       .pipe(map(res => res.body,
         tap(res =>
           this.log(`InfoDoc trouve =${res}`))),

@@ -87,43 +87,56 @@ export class ListeEmployeComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddEmployeComponent, {
-      width: '650px',
-      data: this.employe
-    });
+    if (this.ROLE_NAME === 'ROLE_MANAGER'){
+      const dialogRef = this.dialog.open(AddEmployeComponent, {
+        width: '650px',
+        data: this.employe
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.employe = result;
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.employe = result;
-      this.receptacle.unshift(this.employe);
-      this.dataSource = this.receptacle;
-      this.dataSource = new MatTableDataSource<Employe>(this.receptacle);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.employe = result;
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        this.employe = result;
+        this.receptacle.unshift(this.employe);
+        this.dataSource = this.receptacle;
+        this.dataSource = new MatTableDataSource<Employe>(this.receptacle);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+    }else {
+      this.error = 'Vous n\'êtes pas autorisé';
+      // this.router.navigate(['service']);
+    }
+
+
   }
   redirectToUpdate(id: any) {
     console.log(id);
-    const dialogRef = this.dialog.open(UpdateEmployeComponent,{
-      data: {
-        employe: id
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.employe = result;
-      // this.receptacle
-      this.dataSource = this.receptacle;
-      this.dataSource = new MatTableDataSource<Employe>(this.receptacle);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    if (this.ROLE_NAME === 'ROLE_MANAGER'){
+      const dialogRef = this.dialog.open(UpdateEmployeComponent,{
+        data: {
+          employe: id
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        this.employe = result;
+        // this.receptacle
+        this.dataSource = this.receptacle;
+        this.dataSource = new MatTableDataSource<Employe>(this.receptacle);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
 
 
-    });
+      });
+    }else {
+      this.error = 'Vous n\'êtes pas autorisé';
+      // this.router.navigate(['service']);
+    }
+
   }
   redirectToDelete(id: any) {
     if (this.ROLE_NAME === 'ROLE_MANAGER'){
