@@ -31,6 +31,7 @@ export class ListeDepartementComponent implements OnInit {
   receptacle: any = [];
   personne: any;
   error = '';
+  idEntreprise: number;
   test: Date = new Date();
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -50,27 +51,60 @@ export class ListeDepartementComponent implements OnInit {
     console.log('voir id dans nav bar', decoded.sub);
     this.managerService.getPersonneById(decoded.sub).subscribe(result => {
       this.personne = result.body;
-      this.roles = result.body.roles;
-      console.log('personne departement voir id', this.personne);
-      console.log(this.roles);
-      this.roles.forEach(val => {
-        this.ROLE_MANAGER = val;
-        this.ROLE_NAME = this.ROLE_MANAGER.name;
-        console.log(this.ROLE_NAME);
-      });
-    }),
-    this.departementService.getAllDepartement().subscribe(data => {
-      this.departements = data.body;
-      this.departements.forEach(value => {
-        let opp : Departement = value;
+      if (this.personne.entreprise){
+        this.idEntreprise = this.personne.entreprise.id;
+        console.log(this.idEntreprise);
+        this.roles = result.body.roles;
+        console.log('personne departement voir id', this.personne);
+        console.log(this.roles);
+        this.roles.forEach(val => {
+          this.ROLE_MANAGER = val;
+          this.ROLE_NAME = this.ROLE_MANAGER.name;
+          console.log(this.ROLE_NAME);
+        });
+        this.departementService.getDepByIdEntreprise(this.idEntreprise).subscribe(data => {
+          this.departements = data.body;
+          console.log('voir les dep retournés', this.departement);
+          this.departements.forEach(value => {
+            let opp : Departement = value;
 
-        this.receptacle.push(opp);
-      });
-      this.dataSource = this.receptacle;
-      this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+            this.receptacle.push(opp);
+          });
+          this.dataSource = this.receptacle;
+          this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+      }else if (this.personne.departement){
+        this.idEntreprise = this.personne.departement.entreprise.id;
+        console.log(this.idEntreprise);
+
+
+        this.roles = result.body.roles;
+        console.log('personne departement voir id', this.personne);
+        console.log(this.roles);
+        this.roles.forEach(val => {
+          this.ROLE_MANAGER = val;
+          this.ROLE_NAME = this.ROLE_MANAGER.name;
+          console.log(this.ROLE_NAME);
+        });
+        this.departementService.getDepByIdEntreprise(this.idEntreprise).subscribe(data => {
+          this.departements = data.body;
+          console.log('voir les dep retournés', this.departement);
+          this.departements.forEach(value => {
+            let opp : Departement = value;
+
+            this.receptacle.push(opp);
+          });
+          this.dataSource = this.receptacle;
+          this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+      }
+
     });
+
   }
 
   removeColumn() {
@@ -93,16 +127,21 @@ export class ListeDepartementComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-        this.departement = result;
-        this.receptacle.unshift(this.departement);
-        this.dataSource = this.receptacle;
-        this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        if (result){
+          console.log(result);
+          this.departement = result;
+          this.receptacle.unshift(this.departement);
+          this.dataSource = this.receptacle;
+          this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        } else {
+          console.log('données non disponibles');
+        }
+
       });
     }else{
-      this.error = 'Vous n\'êtes pas autorisé';
+      this.error = 'Vous n\'êtes pas autorisé à créer un service';
     }
 
   }
@@ -125,14 +164,14 @@ export class ListeDepartementComponent implements OnInit {
         this.changeDetectorRefs.detectChanges();
       });
     }else{
-      this.error = 'Vous n\'êtes pas autorisé';
+      this.error = 'Vous n\'êtes pas autorisé à modifier  le service!';
     }
 
   }
   redirectToDelete(id: any) {
     if (this.ROLE_NAME === 'ROLE_MANAGER'){
 
-      this.dialogService.openConfirmDialog('Voulez-vous vraiment supprimer l\'élément ?')
+      this.dialogService.openConfirmDialog('Voulez-vous supprimer le service ?')
         .afterClosed().subscribe(res => {
         if (res){
           console.log(res);
@@ -149,7 +188,7 @@ export class ListeDepartementComponent implements OnInit {
       });
 
     }else {
-      this.error = 'Vous n\'êtes pas autorisé';
+      this.error = 'Vous n\'êtes pas autorisé à supprimer le service';
       // this.router.navigate(['service']);
     }
     this.router.navigate(['service']);

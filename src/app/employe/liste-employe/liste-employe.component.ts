@@ -33,6 +33,7 @@ export class ListeEmployeComponent implements OnInit {
   receptacle: any = [];
   personne: any;
   error = '';
+  idEntreprise: number;
   test: Date = new Date();
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -51,27 +52,54 @@ export class ListeEmployeComponent implements OnInit {
     this.managerService.getPersonneById(decoded.sub).subscribe(result => {
       this.personne = result.body;
       this.roles = result.body.roles;
-      console.log('personne departement voir id', this.personne);
-      console.log(this.roles);
-      this.roles.forEach(val => {
-        this.ROLE_MANAGER = val;
-        this.ROLE_NAME = this.ROLE_MANAGER.name;
-        console.log(this.ROLE_NAME);
-      });
-    }),
-    this.employeService.getAllEmploye().subscribe(data => {
-      this.employes = data.body;
-      console.log('employes', this.employes);
-      this.employes.forEach(value => {
-        let opp : Employe = value;
+      if (this.personne.entreprise){
+        this.idEntreprise = this.personne.entreprise.id;
+        console.log('personne departement voir id', this.personne);
+        console.log(this.roles);
+        this.roles.forEach(val => {
+          this.ROLE_MANAGER = val;
+          this.ROLE_NAME = this.ROLE_MANAGER.name;
+          console.log(this.ROLE_NAME);
+        });
+        this.employeService.getEmplByIdEntreprise(this.idEntreprise).subscribe(data => {
+          this.employes = data.body;
+          console.log('employes', this.employes);
+          this.employes.forEach(value => {
+            let opp : Employe = value;
 
-        this.receptacle.push(opp);
-      });
-      this.dataSource = this.receptacle;
-      this.dataSource = new MatTableDataSource<Employe>(this.receptacle);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+            this.receptacle.push(opp);
+          });
+          this.dataSource = this.receptacle;
+          this.dataSource = new MatTableDataSource<Employe>(this.receptacle);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+      }else if (this.personne.departement){
+        this.idEntreprise = this.personne.departement.entreprise.id;
+        console.log('personne departement voir id', this.personne);
+        console.log(this.roles);
+        this.roles.forEach(val => {
+          this.ROLE_MANAGER = val;
+          this.ROLE_NAME = this.ROLE_MANAGER.name;
+          console.log(this.ROLE_NAME);
+        });
+        this.employeService.getEmplByIdEntreprise(this.idEntreprise).subscribe(data => {
+          this.employes = data.body;
+          console.log('employes', this.employes);
+          this.employes.forEach(value => {
+            let opp : Employe = value;
+
+            this.receptacle.push(opp);
+          });
+          this.dataSource = this.receptacle;
+          this.dataSource = new MatTableDataSource<Employe>(this.receptacle);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+      }
+
     });
+
   }
 
   removeColumn() {
@@ -99,15 +127,21 @@ export class ListeEmployeComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-        this.employe = result;
-        this.receptacle.unshift(this.employe);
-        this.dataSource = this.receptacle;
-        this.dataSource = new MatTableDataSource<Employe>(this.receptacle);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        if (result){
+          this.employe = result;
+          this.receptacle.unshift(this.employe);
+          this.dataSource = this.receptacle;
+          this.dataSource = new MatTableDataSource<Employe>(this.receptacle);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        } else{
+          console.log('pas de données retournées');
+        }
+
+
       });
     }else {
-      this.error = 'Vous n\'êtes pas autorisé';
+      this.error = 'Vous n\'êtes pas autorisé à créer un employé';
       // this.router.navigate(['service']);
     }
 
@@ -133,7 +167,7 @@ export class ListeEmployeComponent implements OnInit {
 
       });
     }else {
-      this.error = 'Vous n\'êtes pas autorisé';
+      this.error = 'Vous n\'êtes pas autorisé à modiier l\'employé';
       // this.router.navigate(['service']);
     }
 
@@ -141,15 +175,15 @@ export class ListeEmployeComponent implements OnInit {
   redirectToDelete(id: any) {
     if (this.ROLE_NAME === 'ROLE_MANAGER'){
 
-      this.dialogService.openConfirmDialog('Voulez-vous vraiment supprimer l\'élément ?')
+      this.dialogService.openConfirmDialog('Voulez-vous supprimer l\'employé ?')
         .afterClosed().subscribe(res => {
         if (res){
           console.log(res);
           this.employeService.supprimerEmploye(id).subscribe(data => {
-            this._snackBar.open('Succès de l\'opération!', '', {
+            this._snackBar.open('employé supprimé avec succès!', '', {
               duration: 3000,
               horizontalPosition: this.horizontalPosition,
-              verticalPosition: 'top',
+              verticalPosition: 'bottom',
 
             });
           });
@@ -158,7 +192,7 @@ export class ListeEmployeComponent implements OnInit {
       });
 
     }else {
-      this.error = 'Vous n\'êtes pas autorisé';
+      this.error = 'Vous n\'êtes pas autorisé à supprimer un employé';
       // this.router.navigate(['service']);
     }
     this.router.navigate(['employe']);

@@ -14,7 +14,7 @@ import {Personne} from "../../model/Personne";
 })
 export class UpdateEmployeComponent implements OnInit {
   employeForm: FormGroup;
-  employe: Personne;
+  employe: Employe;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   constructor( private employeService: EmployeService,
@@ -34,23 +34,20 @@ export class UpdateEmployeComponent implements OnInit {
           nom: this.employe.nom,
           prenom: this.employe.prenom,
           email: this.employe.email,
-          password: this.employe.password,
+          password: '',
           fonction: this.employe.fonction,
           nomComplet: this.employe.nomComplet,
           departement: this.employe.departement,
           adresse: this.employe.adresse,
-          type: this.employe.type,
-          roles: this.employe.roles
+          type: 'EMPLOYE',
         });
       });
   }
 
   onSubmit() {
-    let formValue = this.employeForm.value;
-
     this.employe = this.employeForm.value;
     console.log(this.employe);
-    this.employeService.modifEmploye(formValue).subscribe(data => {
+    this.employeService.modifEmploye(this.employe).subscribe(data => {
       if (data){
         this.employe = data.body;
         this.dialogRef.close(this.employe);

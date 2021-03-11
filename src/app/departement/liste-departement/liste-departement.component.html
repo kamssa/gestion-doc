@@ -17,7 +17,7 @@
           <table mat-table [dataSource]="dataSource" style="position: relative; top: 20px;">
             <ng-container matColumnDef="libelle">
               <th style="width:600px;" mat-header-cell *matHeaderCellDef> Libellé </th>
-              <td mat-cell *matCellDef="let departement"> {{departement.libelle}} </td>
+              <td mat-cell *matCellDef="let departement"> {{departement?.libelle}} </td>
             </ng-container>
             <ng-container matColumnDef="update">
               <th mat-header-cell *matHeaderCellDef> Modifier </th>

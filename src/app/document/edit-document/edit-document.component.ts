@@ -97,9 +97,10 @@ export class EditDocumentComponent implements OnInit {
                this.progress = Math.round(100 * event.loaded / event.total);
                console.log('Voir le message upload=', event.type);
                if (event.type === 1){
-                 this._snackBar.open('Succès de l\'opération!', '', {
-                   duration: 3000,
-                   verticalPosition: 'top',
+                 this._snackBar.open('Fichier archivé avec succès!', '', {
+                   duration: 7000,
+                   horizontalPosition: 'left',
+                   verticalPosition: 'bottom',
                  });
 
               }

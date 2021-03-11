@@ -1,7 +1,6 @@
 <div class="container">
-  <a class="btn btn-large btn-success" href="{{url}}">{{url}}</a>
   <div class="">
-            <h4 class="card-title">Recherche de documents </h4>
+            <h3 class="card-title">Recherche de documents </h3>
           </div>
           <div class="">
             <div>
@@ -21,34 +20,20 @@
                               <button mat-raised-button type="submit"  class="valid">Rechercher</button>
                             </div>-->
                           <div>
-                              <div *ngFor="let doc of oInfoDoc | async" class="list-group">
-
-                                <a class="list-group-item  clearfix">
-                                  <div class="pull-left">
-                                    <h5 style="color: #191919">{{doc.nomDoc}}</h5>
-                                    <h5 style="color: #191919">{{doc.pathImage}}</h5>
-                                  </div>
-                                </a>
-                                <div class="row">
-                                  <div class="col-md-4">
-                                    <button  mat-button  (click)="onImages(doc.nomDoc)">Télécharger</button>
-                                  </div>
-                                  <div class="col-md-4">
-                                    <button  mat-button (click)="modifier(doc.id)">Modiier</button>
-                                  </div>
-                                  <div class="col-md-4">
-                                    <button  mat-button  (click)="supprimer(doc.id)">Supprimer</button>
-                                  </div>
-                                </div>
-                                <mat-divider></mat-divider>
-                                <br>
-                              </div>
-
-                              <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-
-
+                            <div style="overflow-y: scroll; height:150px; position: relative; top:30px;">
+                              <p *ngFor="let doc of oInfoDoc | async" style="text-decoration:underline; height:80px;">
+                              <span>{{doc.nomDoc}}</span>
+                                <br><br><br>
+                                <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="onImages(doc.nomDoc)">Télécharger</button>
+                                <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="modifier(doc.id)">Modifier</button>
+                                <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="supprimer(doc.id)">Supprimer</button>
+                              </p>
                             </div>
-
+                          </div>
+                          <br><br><br>
+                          <p><strong>{{message}}<br></strong>
+                          <a class="download" href="{{url}}">{{url}}</a></p>
+                          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
                         </div>
                       </div>
                       <div>

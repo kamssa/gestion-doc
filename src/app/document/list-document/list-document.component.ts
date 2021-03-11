@@ -38,12 +38,14 @@ export class ListDocumentComponent implements OnInit {
   personne: any;
   depName: string;
   idDep: number;
+  idEntre: number;
   doc: InfoDoc;
   url: any;
   error = '';
   roles: [];
   ROLE_MANAGER: any;
   ROLE_NAME: string;
+  message: string;
 
   constructor(private  router: Router,
               private  infoService: UploadService,
@@ -61,17 +63,32 @@ export class ListDocumentComponent implements OnInit {
     console.log('voir id dans nav bar', decoded.sub);
     this.managerService.getPersonneById(decoded.sub).subscribe(result => {
       this.personne = result.body;
-      this.depName = this.personne.departement.libelle;
-      this.idDep = this.personne.departement.id;
-      console.log('personne departement voir id', this.personne.departement.libelle);
-    }),
-  //this.toutsLesInfoDoc();
-  this.oInfoDoc = this.searchInfoDocSource
-  .pipe(debounceTime(300),
-    distinctUntilChanged(),
-    switchMap(mc => mc ? this.infoService.rechercheInfoParMc(mc, this.idDep)
-    : this.infoService.rechercheInfoParMc('aucun document', 0) ));
-       console.log(this.oInfoDoc);
+      if (this.personne.departement){
+        this.depName = this.personne?.departement?.libelle;
+        this.idDep = this.personne.departement.id;
+        console.log('personne departement voir id', this.personne.departement.libelle);
+        //this.toutsLesInfoDoc();
+        this.oInfoDoc = this.searchInfoDocSource
+          .pipe(debounceTime(300),
+            distinctUntilChanged(),
+            switchMap(mc => mc ? this.infoService.rechercheInfoParMc(mc, this.idDep)
+              : this.infoService.rechercheInfoParMc('aucun document', 0) ));
+        console.log(this.oInfoDoc);
+      }else if (this.personne.entreprise){
+        console.log('personne n\'a pas de departement');
+        console.log('entre', this.personne.entreprise.id);
+        this.idEntre = this.personne.entreprise.id;
+        //this.toutsLesInfoDoc();
+        this.oInfoDoc = this.searchInfoDocSource
+          .pipe(debounceTime(300),
+            distinctUntilChanged(),
+            switchMap(mc => mc ? this.infoService.rechercheInfoParEntreMc(mc, this.idEntre)
+              : this.infoService.rechercheInfoParMc('aucun document', 0) ));
+        console.log(this.oInfoDoc);
+      }
+
+    });
+
   }
   toutsLesInfoDoc() {
     this.infoService.getAllInfoDoc()
@@ -103,15 +120,11 @@ export class ListDocumentComponent implements OnInit {
   }
 
   onImages(nomDoc: string) {
-
     console.log('verifier', nomDoc);
-    /*this.uploadService.download(this.depName, data.body.nomDoc).subscribe(result => {
-      console.log(result.body);
-    });*/
-   this.uploadService.download(this.depName, nomDoc).subscribe(res => {
-
-     this.url = res.url;
-     console.log(this.url);
+    this.uploadService.download(this.depName, nomDoc).subscribe(res => {
+      this.url = res.url;
+      this.message = 'Fichier Téléchargeable:';
+      console.log(this.url);
    });
   }
 
@@ -130,15 +143,15 @@ export class ListDocumentComponent implements OnInit {
 
 
   supprimer(id: number) {
-     this.dialogService.openConfirmDialog('Voulez-vous vraiment supprimer l\'élément ?')
+     this.dialogService.openConfirmDialog('Voulez-vous  supprimer le document ?')
         .afterClosed().subscribe(res => {
         if (res){
           console.log(res);
           this.uploadService.supprimerDocById(id).subscribe(data => {
-            this._snackBar.open('Succès de l\'opération!', '', {
-              duration: 3000,
+            this._snackBar.open('Fichier archivé avec succès!', '', {
+              duration: 5000,
               horizontalPosition: this.horizontalPosition,
-              verticalPosition: 'top',
+              verticalPosition: 'bottom',
 
             });
 

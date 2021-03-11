@@ -38,9 +38,6 @@ import {ErrorDialogComponent} from "../../service/shared/dialogs/error-dialog/er
     AddEmployeComponent,
     SuccessDialogComponent,
     ErrorDialogComponent
-
-
-
   ],
   imports: [
     CommonModule,

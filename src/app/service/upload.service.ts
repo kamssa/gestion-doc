@@ -6,7 +6,7 @@ import {InfoDoc} from '../model/InfoDoc';
 import {MessageService} from './message.service';
 import {environment} from '../../environments/environment';
 import {catchError, map, tap} from "rxjs/operators";
-import {Departement} from "../model/Departement";
+
 
 
 @Injectable({
@@ -52,6 +52,15 @@ export class UploadService {
         tap(res =>
           this.log(`InfoDoc trouve =${res}`))),
         catchError(this.handleError<Array<InfoDoc>>('rechercheInfoDocParMc'))
+      );
+
+  }
+  rechercheInfoParEntreMc(mc: string, id: number): Observable<Array<InfoDoc>> {
+    return this.httpClient.get<Resultat<Array<InfoDoc>>>(`${environment.apiUrl}/api/recheParentreprisemc/?mc=${mc}&id=${id}`)
+      .pipe(map(res => res.body,
+        tap(res =>
+          this.log(`InfoDoc trouve =${res}`))),
+        catchError(this.handleError<Array<InfoDoc>>('rechercheInfoParEntreMc'))
       );
 
   }

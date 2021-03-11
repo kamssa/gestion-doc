@@ -6,7 +6,6 @@ import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.componen
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 
-
 const routes: Routes = [
   { path: 'login', component: ConnexionComponent },
   {
@@ -30,8 +29,9 @@ const routes: Routes = [
   imports: [CommonModule,
     BrowserModule,
     RouterModule.forRoot(routes,{
-      useHash: true
-    })],
+    useHash: true,
+    relativeLinkResolution: 'legacy'
+})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -6,9 +6,9 @@ import {StorageMap} from "@ngx-pwa/local-storage";
 import {Manager} from "../../model/Manager";
 import {DepartementService} from "../../service/departement.service";
 import {Departement} from "../../model/Departement";
-import {SuccessDialogComponent} from "../../service/shared/dialogs/success-dialog/success-dialog.component";
 import {Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-employe',
@@ -20,11 +20,14 @@ export class AddEmployeComponent implements OnInit {
   manager: Manager;
   departements: Departement[];
   departement: Departement;
+  employe: Employe;
   private dialogConfig;
+  error = '';
   constructor(private fb: FormBuilder,
               private employeService: EmployeService, private router: Router,
               private storage: StorageMap, private departementService: DepartementService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog, private _snackBar: MatSnackBar,
+              public dialogRef: MatDialogRef<AddEmployeComponent>) {
   }
 
   ngOnInit(): void {
@@ -82,14 +85,26 @@ export class AddEmployeComponent implements OnInit {
     };
     console.log(employe);
      this.employeService.ajoutEmploye(employe).subscribe(result => {
-     console.log('reussi', result.body);
-       let dialogRef = this.dialog.open(SuccessDialogComponent, this.dialogConfig);
-            dialogRef.afterClosed()
-         .subscribe(result => {
-           this.router.navigate(['employe']);
+       console.log('retour employe', result);
+       this.employe = result.body;
+       if (result.status === 0){
+         this.dialogRef.close(this.employe);
+         this._snackBar.open('Succès de l\'opération!', '', {
+           duration: 3000,
+           verticalPosition: 'top',
          });
-   });
+         this.router.navigate(['employe']);
+       }else {
+         this.error = result.messages[0];
+         console.log( result.messages);
+       }
 
+     }, error => {
+       this.error = error;
+       console.log(this.error);
+
+     }
+     );
   }
 
   greetDep(event) {
