@@ -1,0 +1,52 @@
+.flexbox-container{
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+.flexbox-container > div{
+  width: 50%;
+  padding: 10px ;
+}
+.flexbox-container > div:first-child {
+  margin-right: 20px;
+}
+hr{
+  width:2px;
+  background-color: #d50000;
+  height: 350px;
+}
+.nb{
+  margin-left: 20px;
+}
+
+#ligne2{
+  text-align: center;
+}
+
+#ligne4{
+  text-align: center;
+}
+
+h4{
+  color: #d50000;
+ // text-decoration: underline #d50000 ;
+}
+.container-fluid{
+  position: relative;
+  top: 45px;
+  //width: 800px;
+}
+.card{
+  height: 0rem;
+}
+p{
+  position: relative;
+  top:80px;
+  color: #000000;
+  text-align: center;
+  font-size: 10.5px;
+}
+.card-title{
+  font-size: 16px;
+  padding:7px;
+}

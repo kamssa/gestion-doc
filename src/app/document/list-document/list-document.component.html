@@ -1,12 +1,47 @@
-<mat-card>
-  <mat-card-header>
-  <mat-card-title>La liste des documents</mat-card-title>
-  </mat-card-header>
-</mat-card>
-<br>
-<div>
-  <!--<mat-form-field>
-  <input #searchBox id="serch-box" placeholder="Recherche" (keyup)="search(searchBox.value)"/>
-  </mat-form-field>-->
-</div>
+<div class="container">
+  <div class="">
+            <h3 class="card-title">Recherche de documents </h3>
+          </div>
+          <div class="">
+            <div>
+              <div>
+                <div class="listes">
+                  <div class="item">
+                      <div>
+                        <div class="">
+                          <div class="recherche_p rounded-pill">
+                            <form class="form-inline my-2 my-lg-0">
+                              <div class="recherche-barr ">
+                                <input class="recherche-input " type="search" placeholder="Recherche" aria-label="Search" #searchbox (keyup)="search(searchbox.value)">
+                              </div>
+                            </form>
+                          </div>
+                         <!-- <div class="">
+                              <button mat-raised-button type="submit"  class="valid">Rechercher</button>
+                            </div>-->
+                          <div>
+                            <div style="overflow-y: scroll; height:150px; position: relative; top:30px;">
+                              <p *ngFor="let doc of oInfoDoc | async" style="text-decoration:underline; height:80px;">
+                              <span>{{doc.nomDoc}}</span>
+                                <br><br><br>
+                                <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="onImages(doc)">Télécharger</button>
+                                <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="modifier(doc.id)">Modifier</button>
+                                <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="supprimer(doc.id)">Supprimer</button>
+                              </p>
+                            </div>
+                          </div>
+                          <br><br><br>
+                          <p><strong>{{message}}<br></strong>
+                          <a class="download" href="{{url}}">{{url}}</a></p>
+                          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                        </div>
+                      </div>
+                      <div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
