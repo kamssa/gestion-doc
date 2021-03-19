@@ -38,8 +38,6 @@ export class UpdateDepartementComponent implements OnInit {
   }
 
   onSubmit() {
-    let formValue = this.depForm.value;
-
     this.departement = this.depForm.value;
     this.departementService.modifdepartement(this.departement).subscribe(data => {
       if (data){

@@ -1,4 +1,5 @@
 import {Departement} from "./Departement";
+import {Dossier} from "./Dossier";
 
 export class InfoDoc {
   constructor(
@@ -8,6 +9,7 @@ export class InfoDoc {
     public  nomDoc?: string,
     public  description?: string,
     public departement?: Departement,
+    public dossier?: Dossier,
     public idEntreprise?: number,
     public pathImage?: string
 

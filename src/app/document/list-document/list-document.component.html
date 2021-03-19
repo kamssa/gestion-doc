@@ -24,7 +24,7 @@
                               <p *ngFor="let doc of oInfoDoc | async" style="text-decoration:underline; height:80px;">
                               <span>{{doc.nomDoc}}</span>
                                 <br><br><br>
-                                <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="onImages(doc.nomDoc)">Télécharger</button>
+                                <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="onImages(doc)">Télécharger</button>
                                 <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="modifier(doc.id)">Modifier</button>
                                 <button  type="button" class="btn btn-outline-danger btn-sm"  (click)="supprimer(doc.id)">Supprimer</button>
                               </p>

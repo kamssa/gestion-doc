@@ -14,6 +14,7 @@ import {Departement} from "../../model/Departement";
 import {MatDialog} from "@angular/material/dialog";
 import {UpdateDocComponent} from "../update-doc/update-doc.component";
 import {DialogConfirmService} from "../../helper/dialog-confirm.service";
+import {Dossier} from "../../model/Dossier";
 
 @Component({
   selector: 'app-list-document',
@@ -75,7 +76,6 @@ export class ListDocumentComponent implements OnInit {
               : this.infoService.rechercheInfoParMc('aucun document', 0) ));
         console.log(this.oInfoDoc);
       }else if (this.personne.entreprise){
-        console.log('personne n\'a pas de departement');
         console.log('entre', this.personne.entreprise.id);
         this.idEntre = this.personne.entreprise.id;
         //this.toutsLesInfoDoc();
@@ -119,9 +119,10 @@ export class ListDocumentComponent implements OnInit {
     }, 5000);
   }
 
-  onImages(nomDoc: string) {
-    console.log('verifier', nomDoc);
-    this.uploadService.download(this.depName, nomDoc).subscribe(res => {
+  onImages(doc: InfoDoc) {
+    console.log('verifier', doc);
+
+    this.uploadService.download(doc.dossier.id, doc.nomDoc).subscribe(res => {
       this.url = res.url;
       this.message = 'Fichier Téléchargeable:';
       console.log(this.url);

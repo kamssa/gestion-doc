@@ -43,6 +43,12 @@ export class UploadService {
   getDocById(id: number): Observable<Resultat<InfoDoc>> {
     return this.httpClient.get<Resultat<InfoDoc>>(`${environment.apiUrl}/api/infoDoc/${id}`);
   }
+  getDocByIdDep(id: number): Observable<Resultat<InfoDoc[]>> {
+    return this.httpClient.get<Resultat<InfoDoc[]>>(`${environment.apiUrl}/api/infoDocParDep/${id}`);
+  }
+  getDocByIdEntre(id: number): Observable<Resultat<InfoDoc[]>> {
+    return this.httpClient.get<Resultat<InfoDoc[]>>(`${environment.apiUrl}/api/infoDocParEntreprise/${id}`);
+  }
   supprimerDocById(id: number): Observable<Resultat<boolean>> {
     return this.httpClient.delete<Resultat<boolean>>(`${environment.apiUrl}/api/infoDoc/${id}`);
   }
@@ -72,9 +78,9 @@ export class UploadService {
 
     return this.httpClient.request(req);
   }
-  download(depName: string, keyname: string): Observable<any> {
+  download(id: number, keyname: string): Observable<any> {
      // this.httpClient.get<Observable<any>>(`${environment.apiUrl}/api/file/download/?depName=${depName}&keyname=${keyname}`);
-      const req = new HttpRequest('GET', `${environment.apiUrl}/api/file/download/?depName=${depName}&keyname=${keyname}`, {
+      const req = new HttpRequest('GET', `${environment.apiUrl}/api/file/download/?id=${id}&keyname=${keyname}`, {
         responseType: 'application/octet-stream'
     });
 

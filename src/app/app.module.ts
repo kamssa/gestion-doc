@@ -23,6 +23,11 @@ import { UpdateDepartementComponent } from './departement/update-departement/upd
 import {MatConfirmDialogComponent} from "./service/shared/dialogs/mat-confirm-dialog/mat-confirm-dialog.component";
 import { UpdateEmployeComponent } from './employe/update-employe/update-employe.component';
 import { UpdateDocComponent } from './document/update-doc/update-doc.component';
+import { ListParkerbaseComponent } from './parkerbase/list-parkerbase/list-parkerbase.component';
+import { UpdateParkerbaseComponent } from './parkerbase/update-parkerbase/update-parkerbase.component';
+import { ListDossierComponent } from './dossiers/list-dossier/list-dossier.component';
+import { UpdateDossierComponent } from './dossiers/update-dossier/update-dossier.component';
+import { AddDossierComponent } from './dossiers/add-dossier/add-dossier.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,12 @@ import { UpdateDocComponent } from './document/update-doc/update-doc.component';
     UpdateDepartementComponent,
     MatConfirmDialogComponent,
     UpdateEmployeComponent,
-    UpdateDocComponent
+    UpdateDocComponent,
+    ListParkerbaseComponent,
+    UpdateParkerbaseComponent,
+    ListDossierComponent,
+    UpdateDossierComponent,
+    AddDossierComponent
   ],
     imports: [
         CommonModule,
