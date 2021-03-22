@@ -9,34 +9,23 @@
 
   <div class="row">
     <div class="col-md-6">
+      <div class="ges"></div>
 
-    <div class="ges">
+    <div class="gestion">
       <h1>ParKerBase</h1>
       <h3>
         Gestion Electronique de Documents
       </h3>
 
-      <ul>
-        <li>
-          Gestion du cycle de vie des documents
-        </li>
-        <li>
-          Assure la sécurité et confidentialité des documents
-        </li>
-        <li>
-          Indexation à partir de tags descriptifs et configurables selon le type de document
-        </li>
-        <li>
-          Recherche plein textes sur le contenu des documents archivés
-        </li>
-        <li>
-          Visionnage de documents
-        </li>
-        <li>
-          Tableau de Bord, Statistiques et Reportings
-        </li>
-      </ul>
+      <p>- Gestion du cycle de vie des documents.<br>
+        - Assure la sécurité et confidentialité des documents.<br>
+        - Indexation à partir de tags descriptifs.<br>
+        - Recherche plein textes sur le contenu des documents archivés.<br>
+        - Visionnage de documents.<br>
+        - Tableau de Bord, Statistiques et Reportings.
+      </p>
     </div>
+
 
     </div>
     <div class="col-md-6" fxLayout="row" fxLayoutAlign="space-around center">
@@ -45,7 +34,7 @@
             <mat-card-title>Connexion</mat-card-title>
           </div>
           <div class="card-body">
-            <form [formGroup]="managerForm"  (ngSubmit)="onSubmit()">
+            <form [formGroup]="managerForm"  (ngSubmit)="onSubmit()" novalidate *ngIf="managerForm">
               <div class="input-group form-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -64,11 +53,6 @@
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
               <div *ngIf="error" class="btn login_btn">{{error}}</div>
             </form>
-          </div>
-          <div class="card-footer">
-            <div class="d-flex justify-content-center">
-              <a href="#">Mot de passe oublié?</a>
-            </div>
           </div>
         </div>
 

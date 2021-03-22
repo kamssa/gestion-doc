@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header card-header-danger">
-        <h4 class="card-title">La liste des documents</h4>
+        <h4 class="card-title">ParKerBase</h4>
       </div>
       <div class="row" fxLayout="row" fxLayoutAlign="end center">
         <div class="col-md-8" hidden>
@@ -10,14 +10,24 @@
             <input matInput (keyup)="applyFilter($event)"  placeholder="Recherche..." #input>
           </mat-form-field>
         </div>
-        <!--  <div class="col-md-4" >
-            <button mat-button (click)="openDialog()" class="float-right btn btn-danger"> Créer un service  </button>
-          </div>-->
       </div>
       <table mat-table [dataSource]="dataSource" style="position: relative; top: 20px;">
-        <ng-container matColumnDef="libelle">
+        <ng-container matColumnDef="libelle" *ngIf="!url">
           <th style="width:600px;" mat-header-cell *matHeaderCellDef> Libellé </th>
-          <td mat-cell *matCellDef="let infoDoc"> {{infoDoc?.nomDoc}} </td>
+          <td mat-cell *matCellDef="let infoDoc"><mat-icon>description</mat-icon> {{infoDoc?.nomDoc}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let infoDoc">{{infoDoc.createdAt|date :'shortDate'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="telecharger">
+          <th mat-header-cell *matHeaderCellDef> Télécharger </th>
+          <td mat-cell *matCellDef="let infoDoc">
+            <button mat-icon-button color="accent" (click)="dowload(infoDoc.id)">
+              <mat-icon class="mat-18">archive</mat-icon>
+            </button>
+          </td>
         </ng-container>
         <ng-container matColumnDef="update">
           <th mat-header-cell *matHeaderCellDef> Modifier </th>
@@ -27,7 +37,6 @@
             </button>
           </td>
         </ng-container>
-
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef> Supprimer </th>
           <td mat-cell *matCellDef="let infoDoc">
@@ -53,11 +62,13 @@
           <td class="mat-cell" colspan="4">Pas de données "{{input.value}}"</td>
         </tr>
       </table>
+      <p><strong>{{message}}<br></strong>
+        <a class="download" href="{{url}}">{{url}}</a></p>
+      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
       <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
       <div class="pagination" style="text-align: right; position: relative; top:30px;">
         <mat-paginator  [pageSizeOptions]="[5,10,15,20]" showFirstLastButtons></mat-paginator>
       </div>
-
       <p>
         &copy; Copyright 2020 - {{test | date: 'yyyy'}} <span> ParKerBase. </span> Tous droits reservés. <a>Powered by Infinity Media Technology.</a>
       </p>

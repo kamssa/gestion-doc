@@ -7,8 +7,8 @@
     <mat-form-field>
       <input matInput placeholder="Tags" formControlName="description" type="text"/>
     </mat-form-field>
-    <mat-form-field style="position: relative; margin-top:20px;" class="example-full-width" appearance="fill">
-        <mat-label >Selection un dossier</mat-label>
+    <mat-form-field style="position: relative; top:20px;" class="example-full-width" appearance="fill">
+        <mat-label >Selectionez un dossier</mat-label>
         <mat-select formControlName="libelle"  (selectionChange)="greetDossier($event)">
           <mat-option *ngFor="let d of dossiers" [value]="d.id">
             {{d.libelle}}

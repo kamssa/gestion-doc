@@ -28,6 +28,12 @@ import { UpdateParkerbaseComponent } from './parkerbase/update-parkerbase/update
 import { ListDossierComponent } from './dossiers/list-dossier/list-dossier.component';
 import { UpdateDossierComponent } from './dossiers/update-dossier/update-dossier.component';
 import { AddDossierComponent } from './dossiers/add-dossier/add-dossier.component';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {APP_DATE_FORMATS, AppDateAdapter} from './helper/format-datepicker';
+registerLocaleData(localeFr);
+import {LOCALE_ID} from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -66,7 +72,10 @@ import { AddDossierComponent } from './dossiers/add-dossier/add-dossier.componen
     JwtHelperService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-  ],
+    { provide: LOCALE_ID, useValue: 'fr-FR'},
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

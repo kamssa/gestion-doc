@@ -3,21 +3,35 @@ body{
   font-family: Arial, Helvetica, sans-serif;
 }
 .container-fluid{
-  background: #d50000;
-  background: linear-gradient(to bottom right, #d50000, #d40000);
-  position: relative;
-  top: 0;
+  background-image: url(src/assets/img/centre-de-donnee.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   height: 590px;
 }
 .ges{
-   margin-top: 130px;
+  position: relative;
+  top: 115px;
+  left: 100px;
+  background-color: #000000;
+  padding: 50px;
+  height: 370px;
+  opacity: 0.5;
 }
 .card{
+  position: relative;
+  top: 50px;
+  left: -30px;
   height: 370px;
   width: 400px;
-  background-color: rgb(255,255,255) !important;
+  background-color: transparent !important;
   margin-top: 40vh; /* poussé de la moitié de hauteur de viewport */
-  transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+  transform: translateY(-40%); /* tiré de la moitié de sa propre hauteur */
+  border-radius: 5px;
+}
+.card-header
+{
+  color: #FFFFFF;
 }
 .input-group-prepend span{
   width: 50px;
@@ -49,18 +63,28 @@ input:focus{
 }
 
 h1{
+  position: absolute;
+  top:160px;
+  left: 160px;
   color: #FFFFFF;
   font-size: 36px;
   font-family: "Times New Roman", sans-serif;
   font-weight: bold;
 }
-ul li{
-  color: #FFFFFF;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-}
 h3{
+  position: absolute;
+  top:200px;
+  left: 160px;
   color: #FFFFFF;
   font-family: Arial, Helvetica, sans-serif;
  font-size: 18px;
+}
+p{
+  position: absolute;
+  top:250px;
+  left: 180px;
+  line-height: 2;
+  color: #FFFFFF;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
 }
