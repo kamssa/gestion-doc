@@ -1,5 +1,6 @@
 .container{
   background-color: black;
+  height: 0;
 }
 ul{
   color: #FFFFFF;
@@ -19,7 +20,11 @@ h1{
 }
 p{
   color: #FFFFFF;
+  text-transform: none;
+  padding: 0;
+
 }
 .material-icons{
   color: #FFFFFF !important;
 }
+

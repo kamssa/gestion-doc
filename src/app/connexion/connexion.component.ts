@@ -34,7 +34,7 @@ export class ConnexionComponent implements OnInit {
   isuAth: boolean;
   manager: Manager;
   employe: Employe;
-
+  test : Date = new Date();
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -77,56 +77,60 @@ export class ConnexionComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    const mail = this.managerForm.get('email').value;
+    if (mail){
+      this.managerService.getPersonneByEmail(mail).subscribe(data => {
+        const email = data.body.email;
+        const password = this.managerForm.get('password').value;
+        // this.loading = true;
+        this.personne = data.body;
+        console.log(this.personne.type);
+        this.loading = true;
+        if (data.body.type === 'Manager'){
+          console.log('le type est:', data.body.type);
+          let  manager : Manager = {
+            email: email,
+            password: password,
+            type:'MANAGER'
+          };
+          this.authService.login(manager).subscribe(res => {
+              console.log('resultat manager', res.body);
+              console.log('auth reussi', res.messages);
+              if (res){
+                this.router.navigate([this.returnUrl]);
 
-    const email = this.managerForm.get('email').value;
-    this.managerService.getPersonneByEmail(email).subscribe(data => {
-      const email = data.body.email;
-      const password = this.managerForm.get('password').value;
-     // this.loading = true;
-      this.personne = data.body;
-      console.log(this.personne.type);
-      this.loading = true;
-      if (data.body.type === 'Manager'){
-       console.log('le type est:', data.body.type);
-        let  manager : Manager = {
-          email: email,
-          password: password,
-          type:'MANAGER'
-        };
-        this.authService.login(manager).subscribe(res => {
-          console.log('resultat manager', res.body);
-            console.log('auth reussi', res.messages);
-            if (res){
-              this.router.navigate([this.returnUrl]);
+              }
 
-            }
-
-          },
-          error => {
-            this.error = "email ou mot de passe oublié";
-            this.loading = false;
-        });
-     }
-     else if (data.body.type === 'Employe'){
-        console.log('le type est employe');
-        let  employe : Employe = {
-          email: email,
-          password: password,
-          type:'EMPLOYE'
-        };
-        this.authService.login(employe).subscribe(res => {
-            console.log('resultat manager', res.body);
-            console.log('auth reussi', res.messages);
-            if (res){
-              this.router.navigate([this.returnUrl]);
-            }
             },
-          error => {
-            this.error = "email ou mot de passe oublié";
-            this.loading = false;
-          });
-      }
-    });
+            error => {
+              this.error = "email ou mot de passe oublié";
+              this.loading = false;
+            });
+        }
+        else if (data.body.type === 'Employe'){
+          console.log('le type est employe');
+          let  employe : Employe = {
+            email: email,
+            password: password,
+            type:'EMPLOYE'
+          };
+          this.authService.login(employe).subscribe(res => {
+              console.log('resultat manager', res.body);
+              console.log('auth reussi', res.messages);
+              if (res){
+                this.router.navigate([this.returnUrl]);
+              }
+            },
+            error => {
+              this.error = "email ou mot de passe oublié";
+              this.loading = false;
+            });
+        }
+      });
+    }else {
+      this.error = "Entrer votre email!";
+    }
+
     this.router.navigate(['dashboard']);
   }
 }

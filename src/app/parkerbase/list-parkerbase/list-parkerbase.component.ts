@@ -1,20 +1,18 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {Departement} from "../../model/Departement";
-import {MatSnackBar, MatSnackBarHorizontalPosition} from "@angular/material/snack-bar";
-import {MatSort} from "@angular/material/sort";
-import {MatPaginator} from "@angular/material/paginator";
-import {DepartementService} from "../../service/departement.service";
-import {MatDialog} from "@angular/material/dialog";
-import {AuthService} from "../../service/auth.service";
-import {ManagerService} from "../../service/manager.service";
-import {DialogConfirmService} from "../../helper/dialog-confirm.service";
-import {Router} from "@angular/router";
-import {JwtHelperService} from "@auth0/angular-jwt";
-import {AddDepartementComponent} from "../../departement/add-departement/add-departement.component";
-import {UpdateDepartementComponent} from "../../departement/update-departement/update-departement.component";
-import {UploadService} from "../../service/upload.service";
-import {InfoDoc} from "../../model/InfoDoc";
+import {MatTableDataSource} from '@angular/material/table';
+import {Departement} from '../../model/Departement';
+import {MatSnackBar, MatSnackBarHorizontalPosition} from '@angular/material/snack-bar';
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatDialog} from '@angular/material/dialog';
+import {AuthService} from '../../service/auth.service';
+import {ManagerService} from '../../service/manager.service';
+import {DialogConfirmService} from '../../helper/dialog-confirm.service';
+import {Router} from '@angular/router';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {UploadService} from '../../service/upload.service';
+import {InfoDoc} from '../../model/InfoDoc';
+import {UpdateParkerbaseComponent} from '../update-parkerbase/update-parkerbase.component';
 
 @Component({
   selector: 'app-list-parkerbase',
@@ -22,10 +20,9 @@ import {InfoDoc} from "../../model/InfoDoc";
   styleUrls: ['./list-parkerbase.component.scss']
 })
 export class ListParkerbaseComponent implements OnInit {
-  displayedColumns: string[] = ['libelle', 'update', 'delete'];
+  displayedColumns: string[] = ['libelle', 'date', 'telecharger', 'update', 'delete'];
   dataSource: MatTableDataSource<Departement>;
   infoDocs: InfoDoc[];
-  infoDoc: InfoDoc;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   roles: [];
   ROLE_MANAGER: any;
@@ -36,6 +33,10 @@ export class ListParkerbaseComponent implements OnInit {
   idEntreprise: number;
   idDep: number;
   test: Date = new Date();
+  doc: InfoDoc;
+  docId: number;
+  url: any;
+  message: string;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   constructor(private uploadService: UploadService,
@@ -106,50 +107,14 @@ export class ListParkerbaseComponent implements OnInit {
 
   }
 
-  removeColumn() {
-
-  }
-
-  shuffle() {
-    console.log('');
-  }
-
   applyFilter($event: KeyboardEvent) {
 
   }
 
-  openDialog(): void {
-    if (this.ROLE_NAME === 'ROLE_MANAGER'){
-      const dialogRef = this.dialog.open(AddDepartementComponent, {
-        width: '650px',
-        data: this.infoDoc
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result){
-          console.log(result);
-          this.infoDoc = result;
-          this.receptacle.unshift(this.infoDoc);
-          this.dataSource = this.receptacle;
-          this.dataSource = new MatTableDataSource<InfoDoc>(this.receptacle);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        } else {
-          console.log('données non disponibles');
-        }
-
-      });
-    }else{
-      this.error = 'Vous n\'êtes pas autorisé à créer un service';
-    }
-
-  }
   redirectToUpdate(id: any) {
-    console.log(id);
-    if (this.ROLE_NAME === 'ROLE_MANAGER'){
-      const dialogRef = this.dialog.open(UpdateDepartementComponent,{
+      const dialogRef = this.dialog.open(UpdateParkerbaseComponent,{
         data: {
-          departement: id
+          infoDoc: id
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -162,15 +127,9 @@ export class ListParkerbaseComponent implements OnInit {
         this.dataSource.sort = this.sort;*/
         this.changeDetectorRefs.detectChanges();
       });
-    }else{
-      this.error = 'Vous n\'êtes pas autorisé à modifier  le service!';
-    }
-
   }
   redirectToDelete(id: any) {
-    if (this.ROLE_NAME === 'ROLE_MANAGER'){
-
-      this.dialogService.openConfirmDialog('Voulez-vous supprimer le service ?')
+     this.dialogService.openConfirmDialog('Voulez-vous supprimer le document ?')
         .afterClosed().subscribe(res => {
         if (res){
           console.log(res);
@@ -185,15 +144,19 @@ export class ListParkerbaseComponent implements OnInit {
 
         }
       });
-
-    }else {
-      this.error = 'Vous n\'êtes pas autorisé à supprimer le service';
-      // this.router.navigate(['service']);
-    }
-    this.router.navigate(['service']);
+     this.router.navigate(['parkerbase']);
   }
-  redirectToFormation(id: number) {
-
+  dowload(id: any) {
+    console.log('verifier', id);
+    this.uploadService.getDocById(id).subscribe( data => {
+      this.doc = data.body;
+      this.uploadService.download(this.doc.dossier.id, this.doc.nomDoc).subscribe(res => {
+        this.url = res.url;
+        this.docId = data.body.id;
+        this.message = 'Fichier Téléchargeable:';
+        console.log(res);
+        console.log(this.url);
+      });
+    });
   }
-
 }

@@ -10,15 +10,13 @@ declare interface RouteInfo {
   class: string;
 }
 export const ROUTES: RouteInfo[] = [
-  { path: '/dashboard', title: 'Gestion de documents',  icon: 'folder', class: '' },
-  { path: '/parkerbase', title: 'ParkerBase',  icon: 'folder', class: '' },
-  { path: '/service', title: 'Gestion de Services',  icon: 'business', class: '' },
   { path: '/dossier', title: 'Gestion de Dossiers',  icon: 'folder', class: '' },
-  { path: '/employe', title: 'Gestion d\'employés',  icon: 'personne', class: '' },
-  { path: '/statistique', title: 'Statisques',  icon: 'analytics', class: '' },
-
-
-];
+  { path: '/dashboard', title: 'Gestion de Documents',  icon: 'description', class: '' },
+  { path: '/parkerbase', title: 'ParkerBase',  icon: 'archive', class: '' },
+  { path: '/service', title: 'Gestion de Services',  icon: 'domain', class: '' },
+  { path: '/employe', title: 'Gestion d\'Employés',  icon: 'personne', class: '' },
+  { path: '/statistique', title: 'Statisques',  icon: 'analytics', class: '' }
+  ];
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
