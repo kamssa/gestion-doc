@@ -34,7 +34,7 @@ export class ConnexionComponent implements OnInit {
   isuAth: boolean;
   manager: Manager;
   employe: Employe;
-
+  test : Date = new Date();
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,

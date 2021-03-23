@@ -1,14 +1,14 @@
 body{
-  margin:auto;
+  margin: auto;
   font-family: Arial, Helvetica, sans-serif;
-}
-.container-fluid{
-  background-image: url(src/assets/img/centre-de-donnee.jpg);
+  background-image: url(src/assets/img/CoverPage.png);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 590px;
+  height: 100%;
+
 }
+
 .ges{
   position: relative;
   top: 115px;
@@ -16,22 +16,21 @@ body{
   background-color: #000000;
   padding: 50px;
   height: 370px;
-  opacity: 0.5;
+  opacity: 0.8;
 }
 .card{
   position: relative;
-  top: 50px;
+  top: 10px;
   left: -30px;
-  height: 370px;
+  height: 290px;
   width: 400px;
-  background-color: transparent !important;
   margin-top: 40vh; /* poussé de la moitié de hauteur de viewport */
   transform: translateY(-40%); /* tiré de la moitié de sa propre hauteur */
   border-radius: 5px;
 }
 .card-header
 {
-  color: #FFFFFF;
+  color: #000000;
 }
 .input-group-prepend span{
   width: 50px;
@@ -44,14 +43,14 @@ input:focus{
   box-shadow: 0 0 5px #d50000 !important;
 
 }
-.footer{
-  width: 100%;
-  top:50px;
-  font-size: 10.5px;
-  background-color: #323232;
-  height: 75px;
-  justify-content: center;
-  color: #FFFFFF;
+.footerhome
+{
+  font-size: 12px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom:0;
+  color: #000000;
 }
 .login_btn {
   background-color: #d50000;
@@ -65,23 +64,23 @@ input:focus{
 h1{
   position: absolute;
   top:160px;
-  left: 160px;
+  left: 280px;
   color: #FFFFFF;
-  font-size: 36px;
+  font-size: 60px;
   font-family: "Times New Roman", sans-serif;
   font-weight: bold;
 }
 h3{
   position: absolute;
-  top:200px;
-  left: 160px;
+  top:210px;
+  left: 235px;
   color: #FFFFFF;
   font-family: Arial, Helvetica, sans-serif;
- font-size: 18px;
+  font-size: 18px;
 }
-p{
+h5{
   position: absolute;
-  top:250px;
+  top:260px;
   left: 180px;
   line-height: 2;
   color: #FFFFFF;
