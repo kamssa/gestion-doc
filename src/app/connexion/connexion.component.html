@@ -1,69 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <title>Bootstrap 4 Website Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+    .fakeimg {
+      height: 200px;
+      background: #aaa;
+    }
+  </style>
 </head>
 <body>
-<div class="container-fluid">
-
+<div class="container">
   <div class="row">
-    <div class="col-md-6">
-      <div class="ges"></div>
-
-    <div class="gestion">
-      <h1>ParKerBase</h1>
-      <h3>
-        Application de Gestion Electronique de Documents
-      </h3>
-
-      <h5>- Numérisation et gestion du cycle de vie des documents.<br>
-        - Assure la sécurité et confidentialité des documents.<br>
-        - Indexation à partir de tags descriptifs.<br>
-        - Recherche plein textes sur le contenu des documents archivés.<br>
-        - Téléchargement de documents.<br>
-        - Tableau de Bord, Statistiques et Reportings.
-      </h5>
+      <div class="col-sm-8">
+      <div class="ges">
+          <h1 class="text-center">ParKerBase</h1>
+          <h3 class="text-center">Application de Gestion Electronique de Documents</h3>
+          <h5>- Numérisation et gestion du cycle de vie des documents.<br>
+            - Assure la sécurité et confidentialité des documents.<br>
+            - Indexation à partir de tags descriptifs.<br>
+            - Recherche plein textes sur le contenu des documents archivés.<br>
+            - Téléchargement de documents.<br>
+            - Tableau de Bord, Statistiques et Reportings.
+          </h5>
+      </div>
     </div>
 
-
-    </div>
-    <div class="col-md-6" fxLayout="row" fxLayoutAlign="space-around center">
-      <div class="card" style="text-align: center;" >
-          <div class="card-header">
-            <mat-card-title>Connexion</mat-card-title>
-          </div>
-          <div class="card-body">
-            <form [formGroup]="managerForm"  (ngSubmit)="onSubmit()" novalidate *ngIf="managerForm">
-              <div class="input-group form-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-user"></i></span>
-                </div>
-                <input type="text" class="form-control" placeholder="Login" formControlName="email">
-              </div>
-              <div class="input-group form-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-key"></i></span>
-                </div>
-                <input type="password" class="form-control" placeholder="Mot de passe" formControlName="password">
-              </div>
-              <div class="d-flex justify-content-center  login_container">
-                  <button type="submit" name="button" class="btn login_btn">Se connecter</button>
-              </div>
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              <div *ngIf="error" class="btn login_btn">{{error}}</div>
-            </form>
-          </div>
+      <div class="col-sm-4">
+        <div class="card" style="text-align: center;" >
+        <div class="card-header">
+          <mat-card-title>Connexion</mat-card-title>
         </div>
+        <div class="card-body">
+          <form [formGroup]="managerForm"  (ngSubmit)="onSubmit()" novalidate *ngIf="managerForm">
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Login" formControlName="email">
+            </div>
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+              </div>
+              <input type="password" class="form-control" placeholder="Mot de passe" formControlName="password">
+            </div>
+            <div class="d-flex justify-content-center  login_container">
+              <button type="submit" name="button" class="btn login_btn">Se connecter</button>
+            </div>
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            <div *ngIf="error" class="btn login_btn">{{error}}</div>
+          </form>
+          <p style="position: relative; top:80px;">Veuillez récupérer vos identifiants de connexion auprès de la Direction.</p>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
 
-    </div>
-    <div class="footerhome">
-      <p>
-        &copy; Copyright 2020 - {{test | date: 'yyyy'}} <span> ParKerBase. </span> Tous droits reservés. <a>Powered by <strong>Infinity Media Technology</strong>.</a>
-      </p>
-    </div>
+<div class="footer">
+  <p>
+    &copy; Copyright 2020 - {{test | date: 'yyyy'}} <span> ParKerBase. </span> Tous droits reservés. <a>Powered by <strong>Infinity Media Technology</strong>.</a>
+  </p>
 </div>
-</div>
+
 </body>
 </html>
-

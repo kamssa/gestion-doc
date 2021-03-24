@@ -5,12 +5,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../service/auth.service';
 import {Manager} from '../model/Manager';
 import {ManagerService} from '../service/manager.service';
-import {StorageMap} from '@ngx-pwa/local-storage';
 import {Employe} from '../model/Employe';
 import {Personne} from "../model/Personne";
-import {JwtHelperService} from "@auth0/angular-jwt";
 import {EmployeService} from "../service/employe.service";
-
+declare const $: any;
 
 @Component({
   selector: 'app-connexion',
@@ -34,7 +32,8 @@ export class ConnexionComponent implements OnInit {
   isuAth: boolean;
   manager: Manager;
   employe: Employe;
-  test : Date = new Date();
+  test: Date = new Date();
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -133,4 +132,5 @@ export class ConnexionComponent implements OnInit {
 
     this.router.navigate(['dashboard']);
   }
+
 }
