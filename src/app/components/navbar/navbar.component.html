@@ -16,7 +16,7 @@
             <button mat-flat-button *ngIf="personne">{{personne?.entreprise?.nom}}.{{personne?.fonction}}</button>
           </p>
           <p *ngIf="!nav">
-            <button mat-flat-button *ngIf="personne">{{personne?.departement?.entreprise?.nom}},{{personne?.departement?.libelle}}. Bienvenue {{personne?.nomComplet}}</button>
+            <button mat-flat-button *ngIf="personne">{{personne?.departement?.entreprise?.nom}}, {{personne?.departement?.libelle}}. Bienvenue {{personne?.nomComplet}}</button>
           </p>
         </li>
 
