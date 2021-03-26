@@ -35,7 +35,7 @@
     <input type="submit" value="Archiver" class="bouton rounded"  [disabled]="!selectedFiles">
     <div class="alert alert-light" role="alert">{{ message }}</div>
   </form>
-
+  <div *ngIf="error" class="btn login_btn">{{error}}</div>
 </div>
 </div>
 </div>

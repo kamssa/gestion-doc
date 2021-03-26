@@ -19,6 +19,14 @@
           <th style="width:600px;" mat-header-cell *matHeaderCellDef> Libellé </th>
           <td mat-cell *matCellDef="let dossier"><mat-icon>folder</mat-icon> {{dossier?.libelle}} </td>
         </ng-container>
+        <ng-container matColumnDef="ouvrir">
+          <th style="position: relative; text-align: center;" mat-header-cell *matHeaderCellDef> Ouvrir </th>
+          <td style="position: relative; text-align: center;" mat-cell *matCellDef="let dossier">
+            <button mat-icon-button color="accent" (click)="openDocDossier(dossier.id)">
+              <mat-icon class="mat-18">folder_open</mat-icon>
+            </button>
+          </td>
+        </ng-container>
         <ng-container matColumnDef="update">
           <th style="position: relative; text-align: center;" mat-header-cell *matHeaderCellDef> Modifier </th>
           <td style="position: relative; text-align: center;" mat-cell *matCellDef="let dossier">

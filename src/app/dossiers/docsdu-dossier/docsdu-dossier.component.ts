@@ -41,7 +41,7 @@ export class DocsduDossierComponent implements OnInit {
         console.log('voir les dep retournés', this.infoDocs);
         this.infoDocs.forEach(value => {
           let opp : InfoDoc = value;
-
+          this.infoDoc = value;
           this.receptacle.push(opp);
         });
         this.dataSource = this.receptacle;
@@ -49,5 +49,9 @@ export class DocsduDossierComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+  }
+
+  applyFilter($event: KeyboardEvent) {
+
   }
 }
