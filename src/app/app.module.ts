@@ -34,6 +34,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {APP_DATE_FORMATS, AppDateAdapter} from './helper/format-datepicker';
 registerLocaleData(localeFr);
 import {LOCALE_ID} from '@angular/core';
+import { DocsduDossierComponent } from './dossiers/docsdu-dossier/docsdu-dossier.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {LOCALE_ID} from '@angular/core';
     UpdateParkerbaseComponent,
     ListDossierComponent,
     UpdateDossierComponent,
-    AddDossierComponent
+    AddDossierComponent,
+    DocsduDossierComponent
   ],
     imports: [
         CommonModule,

@@ -49,6 +49,9 @@ export class UploadService {
   getDocByIdEntre(id: number): Observable<Resultat<InfoDoc[]>> {
     return this.httpClient.get<Resultat<InfoDoc[]>>(`${environment.apiUrl}/api/infoDocParEntreprise/${id}`);
   }
+  getDocumentByDossier(id: number): Observable<Resultat<InfoDoc[]>> {
+    return this.httpClient.get<Resultat<InfoDoc[]>>(`${environment.apiUrl}/api/infoDocument/${id}`);
+  }
   supprimerDocById(id: number): Observable<Resultat<boolean>> {
     return this.httpClient.delete<Resultat<boolean>>(`${environment.apiUrl}/api/infoDoc/${id}`);
   }

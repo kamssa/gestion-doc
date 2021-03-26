@@ -17,6 +17,7 @@ import {AddDepartementComponent} from "../../departement/add-departement/add-dep
 import {AddDossierComponent} from "../add-dossier/add-dossier.component";
 import {UpdateDepartementComponent} from "../../departement/update-departement/update-departement.component";
 import {UpdateDossierComponent} from "../update-dossier/update-dossier.component";
+import {DocsduDossierComponent} from "../docsdu-dossier/docsdu-dossier.component";
 
 @Component({
   selector: 'app-list-dossier',
@@ -185,6 +186,29 @@ export class ListDossierComponent implements OnInit {
   }
 
   applyFilter($event: KeyboardEvent) {
+
+  }
+  openDocDossier(id: number) {
+    console.log(id);
+    if (this.ROLE_NAME === 'ROLE_EMPLOYE'){
+      const dialogRef = this.dialog.open(DocsduDossierComponent, {
+        data: {
+          dossier: id
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        /*this.departement = result;
+        this.receptacle.sort();
+        this.dataSource = this.receptacle;
+        this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;*/
+        this.changeDetectorRefs.detectChanges();
+      });
+    }else{
+      this.error = 'Vous n\'êtes pas autorisé à modifier  le dossier!';
+    }
 
   }
 }

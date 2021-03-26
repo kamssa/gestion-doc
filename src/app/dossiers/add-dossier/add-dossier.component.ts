@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Manager} from "../../model/Manager";
-import {Departement} from "../../model/Departement";
 import {StorageMap} from "@ngx-pwa/local-storage";
 import {Router} from "@angular/router";
-import {DepartementService} from "../../service/departement.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {AuthService} from "../../service/auth.service";
 import {ManagerService} from "../../service/manager.service";
