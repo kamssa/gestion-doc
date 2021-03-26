@@ -12,8 +12,11 @@
       <ul class="navbar-nav">
 
         <li class="nav-item">
-          <p  *ngIf="personne;">
-            <button mat-flat-button *ngIf="personne">{{personne?.entreprise?.nom}}{{personne?.departement?.entreprise.nom}},{{personne?.fonction}}{{personne?.departement?.libelle}}. Bienvenue {{personne?.nomComplet}}</button>
+          <p *ngIf="nav">
+            <button mat-flat-button *ngIf="personne">{{personne?.entreprise?.nom}}.{{personne?.fonction}}</button>
+          </p>
+          <p *ngIf="!nav">
+            <button mat-flat-button *ngIf="personne">{{personne?.departement?.entreprise?.nom}},{{personne?.departement?.libelle}}. Bienvenue {{personne?.nomComplet}}</button>
           </p>
         </li>
 
