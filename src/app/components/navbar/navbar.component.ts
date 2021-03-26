@@ -24,6 +24,8 @@ export class NavbarComponent implements OnInit {
   manager: Manager;
   employe: Employe;
   res: any;
+  type: string;
+  nav: boolean;
   constructor(location: Location,  private element: ElementRef, private router: Router,
               private authService: AuthService, private storage: StorageMap,
               private managerService: ManagerService) {
@@ -51,6 +53,12 @@ export class NavbarComponent implements OnInit {
     console.log('voir id dans nav bar', decoded.sub);
     this.managerService.getPersonneById(decoded.sub).subscribe(result => {
       this.personne = result.body;
+      this.type = this.personne.type;
+      if (this.type === 'Manager'){
+      this.nav = true;
+      }else if (this.type === 'EMPLOYE'){
+      this.nav = false;
+      }
       console.log('personne dans nav bar', this.personne);
     });
 
