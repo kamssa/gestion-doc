@@ -9,6 +9,9 @@ import {Departement} from "../../model/Departement";
 import {Router} from "@angular/router";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {JwtHelperService} from "@auth0/angular-jwt";
+import {ManagerService} from "../../service/manager.service";
+import {AuthService} from "../../service/auth.service";
 
 @Component({
   selector: 'app-add-employe',
@@ -23,19 +26,30 @@ export class AddEmployeComponent implements OnInit {
   employe: Employe;
   private dialogConfig;
   error = '';
+  personne: any;
   constructor(private fb: FormBuilder,
               private employeService: EmployeService, private router: Router,
               private storage: StorageMap, private departementService: DepartementService,
               private dialog: MatDialog, private _snackBar: MatSnackBar,
-              public dialogRef: MatDialogRef<AddEmployeComponent>) {
+              public dialogRef: MatDialogRef<AddEmployeComponent>,
+              private managerService: ManagerService, private authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this.departementService.getAllDepartement().subscribe(data => {
-      console.log(data);
-      this.departements = data.body;
-      console.log(this.departements);
+    const currentUser = this.authService.currentUserValue;
+    console.log('localstorage dans la nav bar', currentUser.body.body.accessToken);
+    const helper = new JwtHelperService();
+    const decoded = helper.decodeToken(currentUser.body.body.accessToken);
+    console.log('voir id dans nav bar', decoded.sub);
+    this.managerService.getPersonneById(decoded.sub).subscribe(result => {
+      this.personne = result.body;
+      this.departementService.getDepByIdEntreprise(this.personne.entreprise.id).subscribe(data => {
+        console.log(data);
+        this.departements = data.body;
+        console.log(this.departements);
+      });
     });
+
     this.storage.get("keymanager").subscribe(data => {
      this.manager = data;
     });
