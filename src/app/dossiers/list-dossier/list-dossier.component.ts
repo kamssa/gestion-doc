@@ -25,7 +25,7 @@ import {DocsduDossierComponent} from "../docsdu-dossier/docsdu-dossier.component
   styleUrls: ['./list-dossier.component.scss']
 })
 export class ListDossierComponent implements OnInit {
-  displayedColumns: string[] = ['libelle', 'update', 'delete', 'service'];
+  displayedColumns: string[] = ['libelle', 'ouvrir', 'update', 'delete', 'service'];
   dataSource: MatTableDataSource<Departement>;
   departements: Departement[];
   dossiers: Dossier[];
@@ -198,12 +198,7 @@ export class ListDossierComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-        /*this.departement = result;
-        this.receptacle.sort();
-        this.dataSource = this.receptacle;
-        this.dataSource = new MatTableDataSource<Departement>(this.receptacle);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;*/
+
         this.changeDetectorRefs.detectChanges();
       });
     }else{

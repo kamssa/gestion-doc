@@ -35,6 +35,8 @@ export class EditDocumentComponent implements OnInit {
   dossiers: Dossier[];
   dossier: Dossier;
   fileInfos: Observable<any>;
+  loading = false;
+  error = '';
 
   @ViewChild('fileUpload', {static: false}) fileUpload: ElementRef;
 
@@ -150,6 +152,9 @@ export class EditDocumentComponent implements OnInit {
         this.selectedFiles = undefined;
       }
 
+    }, error => {
+      this.error = "Ce nom de document est déjà utilisé !";
+      this.loading = false;
     });
   }
 
