@@ -37,7 +37,9 @@ export class EditDocumentComponent implements OnInit {
   fileInfos: Observable<any>;
   loading = false;
   error = '';
-
+  ROLE_NAME: string;
+  roles: [];
+  ROLE_MANAGER: any;
   @ViewChild('fileUpload', {static: false}) fileUpload: ElementRef;
 
 //   file : any;
@@ -58,9 +60,21 @@ export class EditDocumentComponent implements OnInit {
       this.personne = result.body;
       if (this.personne.entreprise) {
         console.log('je suis manager');
+        this.roles = result.body.roles;
+        this.roles.forEach(val => {
+          this.ROLE_MANAGER = val;
+          this.ROLE_NAME = this.ROLE_MANAGER.name;
+
+        });
       } else if (this.personne.departement) {
         this.idDep = result.body?.departement?.id;
-        console.log('edit document', this.personne);
+        console.log('je suis employe');
+        this.roles = result.body.roles;
+        this.roles.forEach(val => {
+          this.ROLE_MANAGER = val;
+          this.ROLE_NAME = this.ROLE_MANAGER.name;
+
+        });
         this.dossierService.getDossierByDep(this.idDep).subscribe(data => {
           console.log(data);
           this.dossiers = data.body;
@@ -95,67 +109,70 @@ export class EditDocumentComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.ROLE_NAME === 'ROLE_EMPLOYE'){
+      const formValue = this.docForm.value;
+      console.log(formValue);
+      const infoDoc: InfoDoc = {
+        libelle: formValue.libelle,
+        nomDoc: this.selectedFiles.item(0).name,
+        description: formValue.description,
+        departement: this.personne.departement,
+        dossier: this.dossier,
+        idEntreprise: this.personne.departement.entreprise.id
+      };
+      this.idDos = this.dossier.id;
+      console.log('Voir dans info doc ', infoDoc);
+      console.log('Voir dans info doc ', this.idDos);
+      this.uploadService.ajoutInfoDoc(infoDoc).subscribe(data => {
+        console.log('info doc enregistre avec succes', data);
+        this.infoDocId = data.body.id;
+        console.log(this.infoDocId);
+        if (this.infoDocId) {
+          this.progress = 0;
+          this.currentFile = this.selectedFiles.item(0);
+          const formData = new FormData();
+          formData.append('file', this.currentFile);
+          console.log('formdata', formData);
+          this.idDos = this.dossier.id;
+          this.uploadService.upload(data.body.dossier.id, formData).subscribe(
+            event => {
+              if (event.type === HttpEventType.UploadProgress) {
+                this.progress = Math.round(100 * event.loaded / event.total);
+                console.log('Voir le message upload=', event.type);
+                if (event.type === 1) {
+                  this._snackBar.open('Fichier archivé avec succès!', '', {
+                    duration: 7000,
+                    horizontalPosition: 'left',
+                    verticalPosition: 'bottom',
+                  });
 
-    const formValue = this.docForm.value;
-    console.log(formValue);
-    const infoDoc: InfoDoc = {
-      libelle: formValue.libelle,
-      nomDoc: this.selectedFiles.item(0).name,
-      description: formValue.description,
-      departement: this.personne.departement,
-      dossier: this.dossier,
-      idEntreprise: this.personne.departement.entreprise.id
-    };
-    this.idDos = this.dossier.id;
-    console.log('Voir dans info doc ', infoDoc);
-    console.log('Voir dans info doc ', this.idDos);
-    this.uploadService.ajoutInfoDoc(infoDoc).subscribe(data => {
-      console.log('info doc enregistre avec succes', data);
-      this.infoDocId = data.body.id;
-      console.log(this.infoDocId);
-      if (this.infoDocId) {
-        this.progress = 0;
-        this.currentFile = this.selectedFiles.item(0);
-        const formData = new FormData();
-        formData.append('file', this.currentFile);
-        console.log('formdata', formData);
-        this.idDos = this.dossier.id;
-        this.uploadService.upload(data.body.dossier.id, formData).subscribe(
-          event => {
-            if (event.type === HttpEventType.UploadProgress) {
-              this.progress = Math.round(100 * event.loaded / event.total);
-              console.log('Voir le message upload=', event.type);
-              if (event.type === 1) {
-                this._snackBar.open('Fichier archivé avec succès!', '', {
-                  duration: 7000,
-                  horizontalPosition: 'left',
-                  verticalPosition: 'bottom',
-                });
+                }
+                this.fileUpload.nativeElement.value = null;
+                this.currentFile = null;
+                console.log(this.currentFile);
+                this.docForm.reset();
 
+              } else if (event instanceof HttpResponse) {
+                this.message = event.body.message;
+                // this.fileInfos = this.uploadService.getFiles();
+                console.log('Voir le message upload', event.body.message);
               }
-              this.fileUpload.nativeElement.value = null;
-              this.currentFile = null;
-              console.log(this.currentFile);
-              this.docForm.reset();
+            },
+            err => {
+              this.progress = 0;
+              this.message = 'Le fichier ne peut être archivé !';
+              this.currentFile = undefined;
+            });
+          this.selectedFiles = undefined;
+        }
 
-            } else if (event instanceof HttpResponse) {
-              this.message = event.body.message;
-              // this.fileInfos = this.uploadService.getFiles();
-              console.log('Voir le message upload', event.body.message);
-            }
-          },
-          err => {
-            this.progress = 0;
-            this.message = 'Le fichier ne peut être archivé !';
-            this.currentFile = undefined;
-          });
-        this.selectedFiles = undefined;
-      }
-
-    }, error => {
-      this.error = "Ce nom de document est déjà utilisé !";
-      this.loading = false;
-    });
+      }, error => {
+        this.error = "Ce nom de document est déjà utilisé !";
+        this.loading = false;
+      });
+    }else if (this.ROLE_NAME === 'ROLE_MANAGER'){
+      this.error = 'Vous n\'êtes pas autorisé à archiver';
+    }
   }
 
   annuler() {

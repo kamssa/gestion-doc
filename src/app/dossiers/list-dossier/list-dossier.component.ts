@@ -129,7 +129,7 @@ export class ListDossierComponent implements OnInit {
       });
 
     }else {
-      console.log('Vous n\'êtes pas autorisé');
+      this.error = 'Vous n\'êtes pas autorisé à créer un dossier';
     }
 
 
@@ -201,7 +201,7 @@ export class ListDossierComponent implements OnInit {
 
         this.changeDetectorRefs.detectChanges();
       });
-    }else{
+    }else if (this.ROLE_NAME === 'ROLE_MANAGER'){
       this.error = 'Vous n\'êtes pas autorisé à modifier  le dossier!';
     }
 
