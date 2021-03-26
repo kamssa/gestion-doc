@@ -6,6 +6,7 @@ import {Resultat} from "../model/resultat";
 import {Departement} from "../model/Departement";
 import {environment} from "../../environments/environment";
 import {Dossier} from "../model/Dossier";
+import {InfoDoc} from "../model/InfoDoc";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class DossierService {
   getDossierByDep(id: number): Observable<Resultat<Dossier[]>> {
     return this.http.get<Resultat<Dossier[]>>(`${environment.apiUrl}/api/getDossierByidDep/${id}`);
   }
+
   modifDossier(dossier: Dossier): Observable<Resultat<Dossier>> {
     console.log('methode du service qui modifier dossier', dossier);
     return this.http.put<Resultat<Dossier>>(`${environment.apiUrl}/api/dossier`, dossier);
